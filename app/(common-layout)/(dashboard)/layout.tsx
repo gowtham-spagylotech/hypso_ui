@@ -118,9 +118,9 @@ export default function RootLayout({
                     </li>
                     <li>
                       <Link
-                        href="/user-security"
+                        href="/shop-business"
                         className={`link flex items-center gap-2 clr-neutral-500 hover:text-primary ${
-                          path === "/user-security" && "text-primary"
+                          path === "/shop-business" && "text-primary"
                         }`}
                       >
                         <ShopIcon />
@@ -131,9 +131,9 @@ export default function RootLayout({
                     </li>
                     <li>
                       <Link
-                        href="/user-security"
+                        href="ads"
                         className={`link flex items-center gap-2 clr-neutral-500 hover:text-primary ${
-                          path === "/user-security" && "text-primary"
+                          path === "ads" && "text-primary"
                         }`}
                       >
                         <AdIcon />
@@ -142,9 +142,9 @@ export default function RootLayout({
                     </li>
                     <li>
                       <Link
-                        href="/user-security"
+                        href="/requeriments"
                         className={`link flex items-center gap-2 clr-neutral-500 hover:text-primary ${
-                          path === "/user-security" && "text-primary"
+                          path === "/requeriments" && "text-primary"
                         }`}
                       >
                         <RequerimentIcon />
@@ -155,9 +155,9 @@ export default function RootLayout({
                     </li>
                     <li>
                       <Link
-                        href="/user-security"
+                        href="/reviews"
                         className={`link flex items-center gap-2 clr-neutral-500 hover:text-primary ${
-                          path === "/user-security" && "text-primary"
+                          path === "reviews" && "text-primary"
                         }`}
                       >
                         <ReviewIcon />
@@ -166,9 +166,9 @@ export default function RootLayout({
                     </li>
                     <li>
                       <Link
-                        href="/user-security"
+                        href="/"
                         className={`link flex items-center gap-2 clr-neutral-500 hover:text-primary ${
-                          path === "/user-security" && "text-primary"
+                          path === "/" && "text-primary"
                         }`}
                       >
                         <LogOutIcon />
