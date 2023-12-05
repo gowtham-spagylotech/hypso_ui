@@ -9,8 +9,16 @@ import {
     InformationCircleIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import React from 'react';
+import { useRouter } from 'next/navigation';
 
-const page = () => {
+export default function AddPost() {
+    const router = useRouter();
+    const { category, subcategory } = router.query || {};
+
+console.log("Category:", category);
+console.log("Subcategory:", subcategory);
+
     return (
         <div className="py-[30px] lg:py-[60px] bg-[var(--bg-2)] px-3">
             <div className="container">
@@ -22,8 +30,7 @@ const page = () => {
                                 <div className="rounded-2xl flex justify-between items-center">
                                     <h3 className="h3">Create Advertisement</h3>
                                     <ChevronDownIcon
-                                        className={`w-5 h-5 sm:w-6 sm:h-6 duration-300 ${open ? "rotate-180" : ""
-                                            }`}
+                                        className={`w-5 h-5 sm:w-6 sm:h-6 duration-300 ${open ? "rotate-180" : ""}`}
                                     />
                                 </div>
                             )}
@@ -31,34 +38,18 @@ const page = () => {
 
                             <div className="pt-4">
                                 <div className="border-t pt-4">
+                                    {/* Rest of your form content */}
                                     <div className="parent-form">
                                         <div className="w-1/2 w-100">
                                             <p className="mt-6 mb-4 text-xl font-medium">Category :</p>
-                                            <select className="w-full bg-transparent px-5 py-3 focus:outline-none border rounded-md text-base pr-3">
-                                                <option>Choice</option>
-                                                <option value="1">Real estate</option>
-                                                <option value="2">Used for sale</option>
-                                                <option value="3">Rental</option>
-                                                <option value="3">Jobs</option>
-                                                <option value="3">Event managements</option>
-                                                <option value="3">Service managements</option>
-                                                <option value="3">Products</option>
-                                            </select>
+                                            <p>{category}</p>
                                         </div>
                                         <div className="w-1/2 w-100">
                                             <p className="mt-6 mb-4 text-xl font-medium">Sub Category :</p>
-                                            <select className="w-full bg-transparent px-5 py-3 focus:outline-none border rounded-md text-base pr-3">
-                                                <option>Choice</option>
-                                                <option value="1">Home</option>
-                                                <option value="2">Land</option>
-                                                <option value="3">Apartment</option>
-                                                <option value="3">Mobile</option>
-                                                <option value="3">Car</option>
-                                                <option value="3">Bike</option>
-                                                <option value="3">Camera</option>
-                                            </select>
+                                            <p>{subcategory}</p>
                                         </div>
                                     </div>
+
                                     <div className="parent-form">
                                         <div className="w-1/2 w-100">
                                             <p className="mt-6 mb-4 text-xl font-medium">Title :</p>
@@ -187,4 +178,3 @@ const page = () => {
     );
 };
 
-export default page;

@@ -1,7 +1,7 @@
 "use client";
 import Footer from "@/components/Footer";
 import CommonHeader from "@/components/CommonHeader";
-import HeaderTop from "@/components/HeaderTop";
+import HeaderTop from "@/components/home-1/HeaderTophome1";
 import MobileMenu from "@/components/MobileMenu";
 export default function RootLayout({
   children,
@@ -11,7 +11,7 @@ export default function RootLayout({
   return (
     <>
       <HeaderTop />
-      <CommonHeader />
+      {/* <CommonHeader /> */}
       <MobileMenu />
       {children}
       <Footer />

@@ -8,8 +8,8 @@ import Link from "next/link";
 
 const Category = () => {
     const [hoveredCategory, setHoveredCategory] = useState(null);
-
-    console.log("hoveredCategory",hoveredCategory)
+    const cardHeight = 200;
+    console.log("hoveredCategory", hoveredCategory)
     return (
         <section className="bg-white py-[60px] lg:py-[120px] relative px-3">
             <Image
@@ -27,12 +27,13 @@ const Category = () => {
                     </p>
                 </div>
                 <div className="flex flex-wrap justify-center gap-6">
-                    {categoryData.map(({ id, desc, icon, title, color, subcategories }) => (
+                    {categoryData.map(({ id, desc, icon, title, color, subcategories }, index) => (
                         <div
                             key={id}
-                            className="border rounded-xl max-w-[306px] cursor-pointer group duration-300"
+                            className={`border rounded-xl max-w-[306px] cursor-pointer group duration-300 card ${hoveredCategory === id ? 'hovered' : ''}`}
                             onMouseEnter={() => setHoveredCategory(id)}
-                            // onMouseLeave={() => setHoveredCategory(null)}
+                            onMouseLeave={() => setHoveredCategory(null)}
+                            style={{ marginBottom: index < categoryData.length - 1 && hoveredCategory === id ? cardHeight : 0 }}
                         >
                             <div className={`p-8 bg-white group-hover:bg-${color} rounded-t-xl group-hover:text-black duration-300 transition-all`}>
                                 <i
@@ -45,14 +46,24 @@ const Category = () => {
                                 <p>{desc}</p>
                             </div>
                             {hoveredCategory == id ?
-                                <div className="bg-[var(--bg-1)] p-8 rounded-b-xl group-hover:bg-[#212391] group-hover:text-white duration-600 transition-all">
-                                    {subcategories.map(subcategory => (
-                                        <p key={subcategory.id}>{subcategory.title}</p>
+                                <div className="bg-[var(--bg-1)] p-8 rounded-b-xl group-hover:bg-[#212391] group-hover:text-white duration-600 transition-all relative z-30 ">
+                                    {subcategories.map((subcategory) => (
+                                        <Link
+                                            key={subcategory.id}
+                                            href={{
+                                                pathname: "/add-post",
+                                                query: { category: title, subcategory: subcategory.title },
+                                            }}
+                                        >
+                                            <ul>
+                                                <li>{subcategory.title}</li>
+                                            </ul>
+                                        </Link>
                                     ))}
                                     <Link href="#">
                                         Read More <i className="las la-arrow-right"></i>
                                     </Link>
-                                </div> : 
+                                </div> :
                                 ""
                             }
                         </div>

@@ -116,6 +116,50 @@ input:checked+div svg {
     column-gap: 20px;
 }
 
+.card {
+    height: 270px;
+}
+
+.z-9999 {
+    z-index: 9999;
+}
+
+button.close-btn {
+    float: right;
+}
+
+.sign {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    z-index: 9999;
+}
+
+.choice-login {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 30px;
+}
+
+.w-350 {
+    width: 350px;
+}
+
+.signin-link {
+    position: relative;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.signin-link:hover {
+    color: #363aed;
+}
+
 @media only screen and (max-width: 992px) {
     .parent-form {
         flex-wrap: wrap;

@@ -14,6 +14,7 @@ import Services from "@/components/home-1/Services";
 import StartListing from "@/components/home-1/StartListing";
 import Testimonial from "@/components/home-1/Testimonial";
 import MobileMenu from "@/components/MobileMenu";
+import ProfileDropdown from "@/components/ProfileDropdown";
 
 export default function Home() {
   return (

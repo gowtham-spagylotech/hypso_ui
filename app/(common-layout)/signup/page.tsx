@@ -4,8 +4,8 @@ import LoginImg from "@/public/img/login-img.png";
 const page = () => {
   return (
     <div className="py-[30px] lg:py-[60px] bg-[var(--bg-1)] signup-section">
-      <div className="container">
-        <div className="flex flex-wrap items-center gap-4 md:gap-0 mx-3">
+      {/* <div className="container"> */}
+        {/* <div className="flex flex-wrap items-center gap-4 md:gap-0 mx-3"> */}
           <div className="w-full lg:w-1/2">
             <div className="bg-white rounded-2xl p-4 md:p-6 lg:p-8">
               <form action="#">
@@ -87,11 +87,11 @@ const page = () => {
               </form>
             </div>
           </div>
-          <div className="w-full lg:w-1/2">
+          {/* <div className="w-full lg:w-1/2">
             <Image src={LoginImg} className="w-full xxl:mr-[-200px]" alt="" />
-          </div>
-        </div>
-      </div>
+          </div> */}
+        {/* </div>
+      </div> */}
     </div>
   );
 };

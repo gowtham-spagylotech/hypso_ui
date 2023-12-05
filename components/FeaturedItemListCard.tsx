@@ -11,7 +11,10 @@ import Link from "next/link";
 import { HeartIcon } from "@heroicons/react/24/solid";
 import { HeartIconOutline } from "@/public/data/icons";
 
+
 const FeaturedItemListCard = ({ item }: any) => {
+
+
   const [favourite, setFavourite] = useState(false);
   const {
     id,

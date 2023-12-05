@@ -12,9 +12,39 @@ import { useState } from "react";
 import { HeartIcon } from "@heroicons/react/24/solid";
 import { HeartIconOutline } from "@/public/data/icons";
 import toast, { Toaster } from "react-hot-toast";
+import PopupListPageOTP from "@/components/home-1/PopupListPageOTP";
+import PopupContact from "@/components/home-1/PopupContact";
+import PopupMap from "@/components/home-1/PopupMap";
+
 const notifyAdd = () => toast.success("Added to Wishlist.");
 const notifyRemove = () => toast.error("Removed From Wishlist.");
+
 const PropertyListCard = ({ item }: any) => {
+
+  const [isPopupOpen, setPopupOpen] = useState(false);
+  const [isListPageOTPOpen, setListPageOTPOpen] = useState(false);
+  const [isMapPopupOpen, setMapPopupOpen] = useState(false);
+
+  const handlePhoneIconClick = () => {
+    setPopupOpen(true);
+  };
+
+  const handleMobileIconClick = () => {
+    setListPageOTPOpen(true);
+  };
+
+  const handleMapMarkerClick = () => {
+    setMapPopupOpen(true);
+  };
+
+  const handleClosePopup = () => {
+    setPopupOpen(false);
+  };
+
+  const handleMapPopupClose = () => {
+    setMapPopupOpen(false);
+  };
+
   const [favourite, setFavourite] = useState(false);
   const {
     id,
@@ -77,7 +107,7 @@ const PropertyListCard = ({ item }: any) => {
             </div>
           )}
 
-          <Link
+          {/* <Link
             href="/property-list"
             className="absolute top-4 z-10 inline-block text-primary left-4 bg-white rounded-full py-2 px-2 sm:px-3 md:px-4">
             For {type}
@@ -90,35 +120,39 @@ const PropertyListCard = ({ item }: any) => {
             ) : (
               <HeartIconOutline />
             )}
-          </button>
+          </button> */}
         </div>
         <div className="col-span-12 md:col-span-7">
           <div>
-            <div className="flex items-center pt-3 gap-1 mb-3 pl-4 mt-2">
-              <i className="las la-map-marker-alt text-lg text-[#9C742B]"></i>
-              <span className="inline-block">{address}</span>
-            </div>
+
             <Link
               href="property-details-1"
               className="text-xl font-medium text-neutral-700 pl-4">
               {title.substr(0, 20)}
             </Link>
-            <ul className="flex flex-wrap divide-x divide-dashed justify-between mt-5 pl-3 mb-5">
-              <li className="flex flex-col px-2 gap-1">
-                <i className="las la-city text-xl"></i>
-                <span className="block">{rooms} Room</span>
+            <div className="flex items-center pt-3 gap-1 mb-3 pl-4 mt-2">
+              <i className="las la-map-marker-alt text-lg text-[#9C742B]"></i>
+              <span className="inline-block">{address}</span>
+            </div>
+            <div className="mx-3 md:mx-5">
+              <div className=" border-t border-dash-long"></div>
+            </div>
+            <ul className="flex flex-wrap items-center justify-between mt-5 pl-3 pr-3 mb-5">
+
+              <li className="flex flex-col px-1 xxl:px-2 gap-1">
+                <Link href={""}>
+                  <i className="las la-map-marker text-4xl" onClick={handleMapMarkerClick}></i>
+                </Link>
               </li>
               <li className="flex flex-col px-1 xxl:px-2 gap-1">
-                <i className="las la-bed text-xl"></i>
-                <span className="block"> {bed} Bed </span>
+                <Link href={""}>
+                  <i className="las la-phone text-5xl" onClick={handlePhoneIconClick}></i>
+                </Link>
               </li>
               <li className="flex flex-col px-1 xxl:px-2 gap-1">
-                <i className="las la-bath text-xl"></i>
-                <span className="block"> {bath} Bath </span>
-              </li>
-              <li className="flex flex-col px-1 xxl:px-2 gap-1">
-                <i className="las la-arrows-alt text-xl"></i>
-                <span className="block"> {area} sft </span>
+                <Link href={""}>
+                  <i className="las la-comment text-4xl" onClick={handleMobileIconClick}></i>
+                </Link>
               </li>
             </ul>
           </div>
@@ -127,10 +161,6 @@ const PropertyListCard = ({ item }: any) => {
           </div>
           <div className="px-3 sm:px-4 md:px-5 pb-5 pt-4">
             <div className="flex flex-wrap gap-3 justify-between items-center">
-              <span className="text-primary text-xl font-medium">
-                ${price}
-                <span className="text-base text-neutral-700">/month</span>
-              </span>
               <Link href="/property-details-1" className="btn-outline ">
                 Read More
               </Link>
@@ -139,6 +169,25 @@ const PropertyListCard = ({ item }: any) => {
         </div>
       </div>
       <Toaster position="top-right" />
+      {/* Render Popups based on state */}
+      {isPopupOpen && (
+        <div className="z-9999 fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+          <PopupContact onClose={handleClosePopup} />
+        </div>
+      )}
+
+      {isListPageOTPOpen && (
+        <div className="z-9999 fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+          <PopupListPageOTP item={item} onClose={() => setListPageOTPOpen(false)} />
+        </div>
+      )}
+
+      {isMapPopupOpen && (
+        <div className="z-9999 fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+          <PopupMap onClose={handleMapPopupClose} />
+        </div>
+      )}
+
     </div>
   );
 };

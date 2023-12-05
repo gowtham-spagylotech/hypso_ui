@@ -10,7 +10,7 @@ const LeafletMap = () => {
       center={[51.505, -0.09]}
       zoom={13}
       scrollWheelZoom={false}
-      style={{ height: "120vh" }}>
+      style={{ height: "50vh" }}>
       <TileLayer
         attribution='&copy; <Link href="https://www.openstreetmap.org/copyright">OpenStreetMap</Link> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
