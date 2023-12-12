@@ -4,9 +4,11 @@ import Link from "next/link";
 import LoginImg from "@/public/img/login-img.png";
 import SignUp from "./SignUp";
 import SignInWithOtp from "./SignInWithOtp";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const SignIn = ({ onCloseSignInPopup, onSignUpRequest, handleSignInWithOtpClick, onForgotPasswordClick }) => {
     const [showSignUp, setShowSignUp] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSignUpClick = () => {
         setShowSignUp(true);
@@ -23,6 +25,10 @@ const SignIn = ({ onCloseSignInPopup, onSignUpRequest, handleSignInWithOtpClick,
         onForgotPasswordClick(); // Notify the parent to show ForgotPassword
     };
 
+    const togglePasswordVisibility = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
+    };
+
     return (
         <div className="signup-section">
             <button className="close-btn" onClick={onCloseSignInPopup}>
@@ -37,7 +43,8 @@ const SignIn = ({ onCloseSignInPopup, onSignUpRequest, handleSignInWithOtpClick,
                             <div className="col-span-12">
                                 <label
                                     htmlFor="enter-whatsappnumber"
-                                    className="text-base sm:text-lg md:text-xl font-medium block mb-3">
+                                    className="text-base sm:text-lg md:text-xl font-medium block mb-3"
+                                >
                                     Enter Your WhatsApp Number
                                 </label>
                                 <input
@@ -50,19 +57,29 @@ const SignIn = ({ onCloseSignInPopup, onSignUpRequest, handleSignInWithOtpClick,
                             <div className="col-span-12">
                                 <label
                                     htmlFor="enter-password"
-                                    className="text-base sm:text-lg md:text-xl font-medium block mb-3">
+                                    className="text-base sm:text-lg md:text-xl font-medium block mb-3"
+                                >
                                     Enter Your Password
                                 </label>
-                                <input
-                                    type="text"
-                                    className="w-full bg-[var(--bg-1)] border focus:outline-none rounded-full py-3 px-5 mb-3"
-                                    placeholder="Enter Your Password"
-                                    id="enter-password"
-                                />
+                                <div className="relative">
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        className="w-full bg-[var(--bg-1)] border focus:outline-none rounded-full py-3 px-5 mb-3"
+                                        placeholder="Enter Your Password"
+                                        id="enter-password"
+                                    />
+                                    <span
+                                        className="absolute top-6 right-5 transform -translate-y-1/2 cursor-pointer"
+                                        onClick={togglePasswordVisibility}
+                                    >
+                                        {showPassword ? <FaEyeSlash className="text-2xl" /> : <FaEye className="text-2xl" />}
+                                    </span>
+                                </div>
                                 <Link
                                     href="#"
                                     onClick={handleForgotPasswordClick}
-                                    className="link block text-sm text-primary :clr-primary-400 text-end">
+                                    className="link block text-sm text-primary :clr-primary-400 text-end"
+                                >
                                     Forget password
                                 </Link>
                             </div>

@@ -2,15 +2,22 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import LoginImg from "@/public/img/login-img.png";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const SignUp = ({ onCloseSignUpPopup, onSignInRequest,  }) => {
 
     const [showSignIn, setShowSignIn] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSignInClick = () => {
         setShowSignIn(true);
         onSignInRequest(); // Request the parent to show SignUp
     };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
+    };
+
 
     return (
         <div className="signup-section">
@@ -65,17 +72,26 @@ const SignUp = ({ onCloseSignUpPopup, onSignInRequest,  }) => {
                                 />
                             </div>
                             <div className="col-span-12">
-                                <label
+                            <label
                                     htmlFor="enter-password"
-                                    className="text-base sm:text-lg md:text-xl font-normal sm:font-medium block mb-3">
+                                    className="text-base sm:text-lg md:text-xl font-medium block mb-3"
+                                >
                                     Enter Your Password
                                 </label>
-                                <input
-                                    type="text"
-                                    className="w-full bg-[var(--bg-1)] border focus:outline-none rounded-full py-3 px-5"
-                                    placeholder="Enter Your Password"
-                                    id="enter-password"
-                                />
+                                <div className="relative">
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        className="w-full bg-[var(--bg-1)] border focus:outline-none rounded-full py-3 px-5 mb-3"
+                                        placeholder="Enter Your Password"
+                                        id="enter-password"
+                                    />
+                                    <span
+                                        className="absolute top-6 right-5 transform -translate-y-1/2 cursor-pointer"
+                                        onClick={togglePasswordVisibility}
+                                    >
+                                        {showPassword ? <FaEyeSlash className="text-2xl" /> : <FaEye className="text-2xl" />}
+                                    </span>
+                                </div>
                             </div>
                             <div className="col-span-12">
                                 <p className="mb-0">

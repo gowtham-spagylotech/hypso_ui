@@ -1,190 +1,277 @@
 "use client";
-import Accordion from "@/components/Accordion";
-import CheckboxCustom from "@/components/Checkbox";
-import CustomRangeSlider from "@/components/RangeSlider";
-import { propertyAmenities } from "@/public/data/addpropertyAmenities";
+import * as classNames from "@/public/data/classNames";
+import { useState } from "react";
 import {
-    ChevronDownIcon,
-    CloudArrowUpIcon,
-    InformationCircleIcon,
+  ChevronDownIcon,
 } from "@heroicons/react/24/outline";
+import Accordion from "@/components/Accordion";
+import Select from "@/components/Select";
+import Text from "@/components/Text"
+import Textarea from "@/components/Textarea";
+import Date from "@/components/Date";
+import File from "@/components/File";
+import LabelPTag from "@/components/LabelPTag";
+import BtnCreate from "@/components/BtnCreate";
+import * as fieldTypes from "@/public/data/fieldTypes";
+import { addRequirement } from "@/public/data/addRequirement";
 import Link from "next/link";
 
-const page = () => {
-    return (
-        <div className="py-[30px] lg:py-[60px] bg-[var(--bg-2)] px-3">
-            <div className="container">
-                <div className="w-full xl:w-[83.33%] xxl:w-[100%] mx-auto">
-                    {/* Item 1 */}
-                    <div className="bg-white p-4 sm:p-6 md:p-10 mb-5 sm:mb-8 md:mb-12 rounded-2xl">
-                        <Accordion
-                            buttonContent={(open) => (
-                                <div className="rounded-2xl flex justify-between items-center">
-                                    <h3 className="h3">Post your requirement</h3>
-                                    <ChevronDownIcon
-                                        className={`w-5 h-5 sm:w-6 sm:h-6 duration-300 ${open ? "rotate-180" : ""
-                                            }`}
-                                    />
-                                </div>
-                            )}
-                            initialOpen={true}>
+const {
+  fieldTypeSelect,
+  fieldTypeText,
+  fieldTypeTextarea,
+  fieldTypeDate,
+  fieldTypeFile,
+} = fieldTypes;
 
-                            <div className="pt-4">
-                                <div className="border-t pt-4">
-                                    <div className="parent-form">
-                                        <div className="w-1/2 w-100">
-                                            <p className="mt-6 mb-4 text-xl font-medium">Category :</p>
-                                            <select className="w-full bg-transparent px-5 py-3 focus:outline-none border rounded-md text-base pr-3">
-                                                <option>Choice</option>
-                                                <option value="1">Real estate</option>
-                                                <option value="2">Used for sale</option>
-                                                <option value="3">Rental</option>
-                                                <option value="3">Jobs</option>
-                                                <option value="3">Event managements</option>
-                                                <option value="3">Service managements</option>
-                                                <option value="3">Products</option>
-                                            </select>
-                                        </div>
-                                        <div className="w-1/2 w-100">
-                                            <p className="mt-6 mb-4 text-xl font-medium">Sub Category :</p>
-                                            <select className="w-full bg-transparent px-5 py-3 focus:outline-none border rounded-md text-base pr-3">
-                                                <option>Choice</option>
-                                                <option value="1">Home</option>
-                                                <option value="2">Land</option>
-                                                <option value="3">Apartment</option>
-                                                <option value="3">Mobile</option>
-                                                <option value="3">Car</option>
-                                                <option value="3">Bike</option>
-                                                <option value="3">Camera</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="parent-form">
-                                        <div className="w-1/2 w-100">
-                                            <p className="mt-6 mb-4 text-xl font-medium">Title :</p>
-                                            <input
-                                                type="text"
-                                                className="w-full border p-2 focus:outline-none rounded-md  text-base"
-                                                placeholder="Your title"
-                                            />
-                                        </div>
-                                        <div className="w-1/2 w-100">
-                                            <p className="mt-6 mb-4 text-xl font-medium">Description :</p>
-                                            <textarea
-                                                rows={8}
-                                                className="w-full border p-2 focus:outline-none rounded-md "
-                                                placeholder="About Your Shop Address 1"></textarea>
-                                        </div>
-                                    </div>
+const Page = () => {
 
-                                    <div className="parent-form">
-                                        <div className="w-1/2 w-100">
-                                            <p className="mt-6 mb-4 text-xl font-medium">Link :</p>
-                                            <input
-                                                type="text"
-                                                className="w-full border p-2 focus:outline-none rounded-md  text-base"
-                                                placeholder="Your email id"
-                                            />
-                                        </div>
-                                        <div className="w-1/2 w-100">
-                                            <p className="mt-6 mb-4 text-xl font-medium">From :</p>
-                                            <input
-                                                type="date"
-                                                className="w-full border p-2 focus:outline-none rounded-md  text-base"
-                                                placeholder="Your website url"
-                                            />
-                                            <p className="mt-6 mb-4 text-xl font-medium">To :</p>
-                                            <input
-                                                type="date"
-                                                className="w-full border p-2 focus:outline-none rounded-md  text-base"
-                                                placeholder="Your website url"
-                                            />
-                                        </div>
-                                    </div>
-                                    <h6 className="mt-6 mb-4 text-xl w-full font-medium">Images</h6>
-                                    <div className="parent-form">
-                                        <div className="w-1/2 w-100">
-                                            <p className="mt-6 mb-4 text-xl font-medium">Feature image</p>
-                                            <div className="flex items-center justify-center border-dashed rounded-2xl w-full">
-                                                <label
-                                                    htmlFor="dropzone-file"
-                                                    className="flex flex-col items-center justify-center w-full cursor-pointer bg-[var(--bg-2)] rounded-2xl border border-dashed">
-                                                    <span className="flex flex-col items-center justify-center py-12">
-                                                        <CloudArrowUpIcon className="w-[60px] h-[60px]" />
-                                                        <span className="h3 clr-neutral-500 text-center mt-4 mb-3">
-                                                            Drag & Drop
-                                                        </span>
-                                                        <span className="block text-center mb-6 clr-neutral-500">
-                                                            OR
-                                                        </span>
-                                                        <span className="inline-block py-3 px-6 rounded-full bg-[#354764] text-white mb-10">
-                                                            Select Files
-                                                        </span>
-                                                        <span className="flex items-center justify-center flex-wrap gap-5">
-                                                            <span className="flex items-center gap-2">
-                                                                <InformationCircleIcon className="w-5 h-5" />
-                                                                <span className="block mb-0 clr-neutral-500">
-                                                                    Maximum allowed file size is 9.00 MB
-                                                                </span>
-                                                            </span>
-                                                            <span className="flex items-center gap-2">
-                                                                <InformationCircleIcon className="w-5 h-5" />
-                                                                <span className="block mb-0 clr-neutral-500">
-                                                                    Maximum 10 files are allowed
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                    <input type="file" id="dropzone-file" className="hidden" />
-                                                </label>
-                                            </div>
-                                        </div>
+  const [selectCategoryValue, setSelectCategoryValue] = useState('');
+  const [selectSubcategoryValue, setSelectSubcategoryValue] = useState('');
+  const [titleValue, setTitleValue] = useState('');
+  const [subtitleValue, setSubtitleValue] = useState('');
+  const [linkValue, setLinkValue] = useState('');
+  const [descriptionValue, setDescriptionValue] = useState('');
+  const [fromDateValue, setFromDateValue] = useState('');
+  const [toDateValue, setToDateValue] = useState('');
+  const [fileValues, setFileValues] = useState<Record<string, File | null>>({
+    "Feature Image": null,
+    "Gallery Images": null,
+  });
 
-                                        <div className="w-1/2 w-100">
-                                            <p className="mt-6 mb-4 text-xl font-medium">Gallery images</p>
-                                            <div className="flex items-center justify-center border-dashed rounded-2xl w-full">
-                                                <label
-                                                    htmlFor="dropzone-file"
-                                                    className="flex flex-col items-center justify-center w-full cursor-pointer bg-[var(--bg-2)] rounded-2xl border border-dashed">
-                                                    <span className="flex flex-col items-center justify-center py-12">
-                                                        <CloudArrowUpIcon className="w-[60px] h-[60px]" />
-                                                        <span className="h3 clr-neutral-500 text-center mt-4 mb-3">
-                                                            Drag & Drop
-                                                        </span>
-                                                        <span className="block text-center mb-6 clr-neutral-500">
-                                                            OR
-                                                        </span>
-                                                        <span className="inline-block py-3 px-6 rounded-full bg-[#354764] text-white mb-10">
-                                                            Select Files
-                                                        </span>
-                                                        <span className="flex items-center justify-center flex-wrap gap-5">
-                                                            <span className="flex items-center gap-2">
-                                                                <InformationCircleIcon className="w-5 h-5" />
-                                                                <span className="block mb-0 clr-neutral-500">
-                                                                    Maximum allowed file size is 9.00 MB
-                                                                </span>
-                                                            </span>
-                                                            <span className="flex items-center gap-2">
-                                                                <InformationCircleIcon className="w-5 h-5" />
-                                                                <span className="block mb-0 clr-neutral-500">
-                                                                    Maximum 10 files are allowed
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                    <input type="file" id="dropzone-file" className="hidden" />
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </Accordion>
-                    </div>
-                </div>
-            </div>
-        </div>
+  const handleCreateRequirement = () => {
+    console.log("Button clicked");
+
+    const requirementData = {
+      selectCategoryValue,
+      selectSubcategoryValue,
+      titleValue,
+      subtitleValue,
+      linkValue,
+      descriptionValue,
+      fromDateValue,
+      toDateValue,
+      fileValues,
+
+    };
+
+    console.log("Created Requirement:", requirementData);
+  };
+
+  const renderFormFields = (fields: string | any[]) => {
+
+    const numberOfColumns = 2;
+
+    const numberOfRows = Math.ceil(fields.length / numberOfColumns);
+
+    const rows = Array.from({ length: numberOfRows }, (_, rowIndex) =>
+      fields.slice(rowIndex * numberOfColumns, (rowIndex + 1) * numberOfColumns)
     );
+
+    return rows?.map((row, rowIndex) => (
+      <div key={rowIndex} className={`flex gap-5 mb-4 parent-form`}>
+        {row?.map((field, index) => (
+          <div key={index} className={`w-1/${numberOfColumns} w-100`}>
+            {field.type === fieldTypeSelect && (
+              <div className={classNames.formFieldWrapper}>
+                <LabelPTag className={classNames.formFieldLabel} label={field.label} />
+                <Select className={classNames.selectInput} options={field.options} value={getSelectValue(field.label)}
+                  onChange={(value) => handleSelectChange(field.label, value)} />
+              </div>
+            )}
+
+            {field.type === fieldTypeText && (
+              <div className={classNames.formFieldWrapper}>
+                <p className={classNames.formFieldLabel}>{field.label} :</p>
+                <Text className={classNames.textInput} placeholder={field.placeholder} value={getInputValue(field.label)}
+                  onChange={(value) => handleTextChange(field.label, value)} />
+              </div>
+            )}
+
+            {field.type === fieldTypeTextarea && (
+              <div className={classNames.formFieldWrapper}>
+                <LabelPTag className={classNames.formFieldLabel} label={field.label} />
+                <Textarea className={classNames.textareaInput} placeholder={field.placeholder} value={getTextareaValue(field.label)}
+                  onChange={(value) => handleTextareaChange(field.label, value)} />
+              </div>
+            )}
+
+            {field.type === fieldTypeDate && (
+              <div className={classNames.formFieldWrapper}>
+                <LabelPTag className={classNames.formFieldLabel} label={field.label} />
+                <Date className={classNames.dateInput} placeholder={field.placeholder} value={getDateValue(field.label)}
+                  onChange={(value) => handleDateChange(field.label, value)} />
+              </div>
+            )}
+
+            {field.type === fieldTypeFile && (
+              <div className={classNames.formFieldWrapper}>
+                <File
+                  className={classNames.fileInputWrapper}
+                  label={field.label}
+                  onChange={(e) => handleFileChange(field.label, e)}
+                />
+                <p>File: {fileValues[field.label] ? fileValues[field.label].name : "No file selected"}</p>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    ));
+  };
+
+
+  //select
+  const getSelectValue = (label: string) => {
+    switch (label) {
+      case "Category":
+        return selectCategoryValue;
+      case "Subcategory":
+        return selectSubcategoryValue;
+      default:
+        return '';
+    }
+  };
+
+  const handleSelectChange = (label: string, value: string) => {
+    switch (label) {
+      case "Category":
+        setSelectCategoryValue(value);
+        break;
+      case "Subcategory":
+        setSelectSubcategoryValue(value);
+        break;
+      default:
+        break;
+    }
+  };
+
+  //text
+  const getInputValue = (label: string) => {
+    switch (label) {
+      case "Title":
+        return titleValue;
+      case "Subtitle":
+        return subtitleValue;
+      case "Link":
+        return linkValue;
+      default:
+        return '';
+    }
+  };
+
+  const handleTextChange = (label: string, value: string) => {
+    switch (label) {
+      case "Title":
+        setTitleValue(value);
+        break;
+      case "Subtitle":
+        setSubtitleValue(value);
+        break;
+      case "Link":
+        setLinkValue(value);
+        break;
+      default:
+        break;
+    }
+  };
+
+  //textarea
+  const getTextareaValue = (label: string) => {
+    switch (label) {
+      case "Description":
+        return descriptionValue;
+      default:
+        return '';
+    }
+  };
+
+  const handleTextareaChange = (label: string, value: string) => {
+    switch (label) {
+      case "Description":
+        setDescriptionValue(value);
+        break;
+      default:
+        break;
+    }
+  };
+
+  //date
+  const getDateValue = (label: string) => {
+    switch (label) {
+      case "From":
+        return fromDateValue;
+      case "To":
+        return toDateValue;
+      default:
+        return '';
+    }
+  };
+
+  const handleDateChange = (label: string, value: string) => {
+    switch (label) {
+      case "From":
+        setFromDateValue(value);
+        break;
+      case "To":
+        setToDateValue(value);
+        break;
+      default:
+        break;
+    }
+  };
+
+  //file
+  const handleFileChange = (label: string, event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+
+      // Update the specific file value using the label as the key
+      setFileValues((prevFileValues) => ({
+        ...prevFileValues,
+        [label]: file,
+      }));
+    }
+  };
+
+  return (
+    <div className="py-[30px] lg:py-[60px] bg-[var(--bg-2)] px-3">
+      <div className="container">
+        <div className="w-full xl:w-[83.33%] xxl:w-[100%] mx-auto">
+
+          {addRequirement.sections.map((section, index) => (
+
+            <div key={index} className="bg-white p-4 sm:p-6 md:p-10 mb-5 sm:mb-8 md:mb-12 rounded-2xl">
+
+              <Accordion
+                buttonContent={(open) => (
+                  <div className="rounded-2xl flex justify-between items-center">
+                    <h3 className="h3">{section.title}</h3>
+                    <ChevronDownIcon
+                      className={`w-5 h-5 sm:w-6 sm:h-6 duration-300 ${open ? "rotate-180" : ""}`}
+                    />
+                  </div>
+                )}
+                initialOpen={true}
+              >
+
+                <div className="pt-4">
+                  <div className="border-t pt-4">
+                    <BtnCreate onClick={handleCreateRequirement} />
+                    {renderFormFields(section.fields)}
+                  </div>
+                </div>
+
+              </Accordion>
+              <BtnCreate onClick={handleCreateRequirement} />
+
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export default page;
+export default Page;

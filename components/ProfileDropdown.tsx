@@ -1,9 +1,19 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import Image from "next/image";
+import { useState } from "react";
 import Link from "next/link";
 
 export default function ProfileDropdown() {
+  const [showSubMenu, setShowSubMenu] = useState(false);
+
+  const handleCategoryHover = () => {
+    setShowSubMenu(true);
+  };
+
+  const handleCategoryLeave = () => {
+    setShowSubMenu(false);
+  };
   return (
     <div className="text-left z-10">
       <Menu as="div" className="relative inline-block top-1 md:top-[2px]">
@@ -31,6 +41,7 @@ export default function ProfileDropdown() {
                     width={55}
                     height={55}
                   />
+
                   <div className="flex flex-col">
                     <span className="text-gray-800 text-xl font-semibold">
                       Peter Parker
@@ -44,57 +55,88 @@ export default function ProfileDropdown() {
               <Menu.Item>
                 {({ active }) => (
                   <button
-                    className={`${
-                      active ? "bg-gray-200 text-gray-800" : ""
-                    } group flex gap-2 w-full items-center rounded-md px-2 py-2 text-sm mt-2`}
+                    className={`${active ? "bg-gray-200 text-gray-800" : ""
+                      } group flex gap-2 w-full items-center rounded-md px-2 py-2 text-sm mt-2`}
                   >
                     <UserIcon />
                     My Account
                   </button>
                 )}
               </Menu.Item>
+
+              <Menu.Item>
+                <Menu>
+                  {({ open }) => (
+                    <>
+                      <div className="profile-dropdown">
+                        <div
+                          className="category"
+                          onMouseEnter={handleCategoryHover}
+                          onMouseLeave={handleCategoryLeave}
+                        >
+                          <Menu.Button className="group flex gap-2 w-full items-center rounded-md px-2 py-2 text-sm mt-2">
+                            <i className="lab la-buromobelexperte text-2xl"></i>
+                            Category
+                          </Menu.Button>
+                          <div className={`submenu ${showSubMenu ? 'block' : 'hidden'}`}>
+                            <Menu.Item>
+                              {({ active }) => (
+                                <Link href="/add-category" className={`${active ? "bg-gray-200 text-gray-800" : ""
+                                  } group flex gap-2 w-full items-center rounded-md px-2 py-2 text-sm`}
+                                >
+                                  <i className="las la-plus-circle text-xl"></i>
+                                  Create Category
+                                </Link>
+                              )}
+                            </Menu.Item>
+                            <Menu.Item>
+                              {({ active }) => (
+                                <Link href="/edit-category"
+                                  className={`${active ? "bg-gray-200 text-gray-800" : ""
+                                    } group flex gap-2 w-full items-center rounded-md px-2 py-2 text-sm`}
+                                >
+                                  <i className="las la-edit text-xl"></i>
+                                  Edit Category
+                                </Link>
+                              )}
+                            </Menu.Item>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </Menu>
+              </Menu.Item>
+
               <Menu.Item>
                 {({ active }) => (
                   <button
-                    className={`${
-                      active ? "bg-gray-200 text-gray-800" : ""
-                    } group flex gap-2 w-full items-center rounded-md px-2 py-2 text-sm`}
+                    className={`${active ? "bg-gray-200 text-gray-800" : ""
+                      } group flex gap-2 w-full items-center rounded-md px-2 py-2 text-sm`}
                   >
                     <ShopIcon />
                     My Shop/Business
                   </button>
                 )}
               </Menu.Item>
+
               <Menu.Item>
                 {({ active }) => (
                   <button
-                    className={`${
-                      active ? "bg-gray-200 text-gray-800" : ""
-                    } group flex gap-2 w-full items-center rounded-md px-2 py-2 text-sm`}
+                    className={`${active ? "bg-gray-200 text-gray-800" : ""
+                      } group flex gap-2 w-full items-center rounded-md px-2 py-2 text-sm`}
                   >
                     <AdIcon />
                     My Ads
                   </button>
                 )}
               </Menu.Item>
+
               <Menu.Item>
                 {({ active }) => (
                   <button
-                    className={`${
-                      active ? "bg-gray-200 text-gray-800" : ""
-                    } group flex gap-2 w-full items-center rounded-md px-2 py-2 text-sm `}
-                  >
-                    <RequerimentIcon />
-                    My Requeriments
-                  </button>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active ? "bg-gray-200 text-gray-800" : ""
-                    } group flex gap-2 w-full items-center rounded-md px-2 py-2 text-sm `}
+                    className={`${active ? "bg-gray-200 text-gray-800" : ""
+                      } group flex gap-2 w-full items-center rounded-md px-2 py-2 text-sm `}
                   >
                     <ReviewIcon />
                     My Reviews
@@ -105,15 +147,14 @@ export default function ProfileDropdown() {
               <Menu.Item>
                 {({ active }) => (
                   <button
-                    className={`${
-                      active ? "bg-gray-200 text-gray-800" : ""
-                    } group flex gap-2 w-full items-center rounded-md px-2 py-2 text-sm`}
-                  >
+                    className={`${active ? "bg-gray-200 text-gray-800" : ""
+                      } group flex gap-2 w-full items-center rounded-md px-2 py-2 text-sm`} >
                     <LogOutIcon />
                     Log out
                   </button>
                 )}
               </Menu.Item>
+
             </div>
           </Menu.Items>
         </Transition>
@@ -254,6 +295,7 @@ const RequerimentIcon = () => {
     </svg>
   );
 };
+
 const ReviewIcon = () => {
   return (
     <svg
@@ -277,6 +319,7 @@ const ReviewIcon = () => {
     </svg>
   );
 };
+
 const LogOutIcon = () => {
   return (
     <svg

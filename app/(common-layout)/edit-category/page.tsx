@@ -12,9 +12,9 @@ import Textarea from "@/components/Textarea";
 import Date from "@/components/Date";
 import File from "@/components/File";
 import LabelPTag from "@/components/LabelPTag";
-import BtnCreate from "@/components/BtnCreate";
+import BtnUpdate from "@/components/BtnUpdate";
 import * as fieldTypes from "@/public/data/fieldTypes";
-import { addCategory } from "@/public/data/addCategory";
+import { editCategory } from "@/public/data/editCategory";
 import Link from "next/link";
 
 const {
@@ -66,7 +66,7 @@ const Page = () => {
       <div className="container">
         <div className="w-full xl:w-[83.33%] xxl:w-[100%] mx-auto">
 
-          {addCategory.sections.map((section, index) => (
+          {editCategory.sections.map((section, index) => (
 
             <div key={index} className="bg-white p-4 sm:p-6 md:p-10 mb-5 sm:mb-8 md:mb-12 rounded-2xl">
 
@@ -84,13 +84,13 @@ const Page = () => {
 
                 <div className="pt-4">
                   <div className="border-t pt-4">
-                    <BtnCreate />
+                    <BtnUpdate />
                     {renderFormFields(section.fields)}
                   </div>
                 </div>
 
               </Accordion>
-              <BtnCreate />
+              <BtnUpdate />
 
             </div>
           ))}

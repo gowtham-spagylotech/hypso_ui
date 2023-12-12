@@ -6,19 +6,15 @@
     .h1 {
         @apply text-3xl md:text-4xl lg:text-[56px] lg:leading-[68px];
     }
-
     .h2 {
         @apply text-2xl font-medium sm:text-3xl xl:text-[40px] text-[#243757] sm:font-semibold;
     }
-
     .h3 {
         @apply text-lg sm:text-2xl md:text-[32px] leading-[120%] text-[#243757] font-medium sm:font-semibold;
     }
-
     .container {
         @apply mx-auto sm:max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1140px] xxl:max-w-[1320px];
     }
-
     .btn {
         @apply rounded-[30px] inline-flex items-center gap-2;
     }
@@ -100,6 +96,7 @@ input:checked+div svg {
     @apply block;
 }
 
+
 .scrollbar-hide::-webkit-scrollbar {
 
     display: none;
@@ -159,6 +156,13 @@ button.close-btn {
 .signin-link:hover {
     color: #363aed;
 }
+
+.create-btn {
+    display: flex;
+    justify-content: flex-end;
+}
+
+
 
 @media only screen and (max-width: 992px) {
     .parent-form {

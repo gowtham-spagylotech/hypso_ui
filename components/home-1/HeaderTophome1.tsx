@@ -76,27 +76,27 @@ const HeaderTop = () => {
     setShowSignInPopup(true)
   };
 
-  
-// Function to show ForgotPassword component
-const handleForgotPasswordClick = () => {
-  setShowForgotPassword(true);
-};
 
-// Function to hide ForgotPassword component
-const handleCloseForgotPasswordPopup = () => {
-  setShowForgotPassword(false);
-};
+  // Function to show ForgotPassword component
+  const handleForgotPasswordClick = () => {
+    setShowForgotPassword(true);
+  };
 
-// Function to show ForgotPasswordGenerateOtp component
-const handleForgotPasswordGenerateOtpClick = () => {
-  setShowForgotPasswordGenerateOtp(true);
-  setShowForgotPassword(false); // Close the ForgotPassword component if open
-};
+  // Function to hide ForgotPassword component
+  const handleCloseForgotPasswordPopup = () => {
+    setShowForgotPassword(false);
+  };
 
-// Function to hide ForgotPasswordGenerateOtp component
-const handleCloseForgotPasswordGenerateOtpPopup = () => {
-  setShowForgotPasswordGenerateOtp(false);
-};
+  // Function to show ForgotPasswordGenerateOtp component
+  const handleForgotPasswordGenerateOtpClick = () => {
+    setShowForgotPasswordGenerateOtp(true);
+    setShowForgotPassword(false); // Close the ForgotPassword component if open
+  };
+
+  // Function to hide ForgotPasswordGenerateOtp component
+  const handleCloseForgotPasswordGenerateOtpPopup = () => {
+    setShowForgotPasswordGenerateOtp(false);
+  };
 
   return (
     <>
@@ -132,6 +132,7 @@ const handleCloseForgotPasswordGenerateOtpPopup = () => {
             alt="logo"
             priority
           />
+
           <div className="flex divide-x-[1px]">
             <div className="flex items-center gap-5 px-2 xl:px-4">
               <i className="las la-certificate bg-primary text-white text-4xl p-2 rounded-full"></i>
@@ -139,23 +140,17 @@ const handleCloseForgotPasswordGenerateOtpPopup = () => {
                 <span className="text-base">Add your shop/business</span>
               </div>
             </div>
-            {/* <span className='inline-block h-full w-[1px] bg-[var(--border)]'></span> */}
+
             <div className="flex items-center gap-5 px-2 xl:px-4">
               <i className="las la-bullhorn bg-[var(--secondary)] text-[var(--neutral-700)] text-4xl p-2 rounded-full"></i>
               <div className="flex-col hidden lg:flex">
-                <span className="text-base">Create an advertisement</span>
+                <span className="text-base">Create an post</span>
               </div>
             </div>
-            {/* <span className='inline-block h-full w-[1px] bg-[var(--border)]'></span> */}
-            <div className="flex items-center gap-5 px-2 xl:px-4">
-              <i className="las la-user-plus bg-[var(--tertiary)] text-[var(--neutral-700)] text-4xl p-2 rounded-full"></i>
-              <div className="flex-col hidden lg:flex">
-                <span className="text-base">Post your requirement</span>
-              </div>
-            </div>
+
           </div>
           <NotificationDropdown />
-          {/* <ProfileDropdown /> */}
+          <ProfileDropdown />
           <div className="sign">
             <Link href="#" onClick={handleSignInClick} className="font-semibold">
               <span className="inline-block z-30">Sign In</span>
@@ -174,7 +169,7 @@ const handleCloseForgotPasswordGenerateOtpPopup = () => {
                 onSignUpRequest={handleSignUpRequest}
                 handleSignInWithOtpClick={handleSignInWithOtpClick}
                 onSignUpFromSignInWithOtp={handleSignUpFromSignInWithOtp}
-                onBackToSignIn={handleBackToSignIn}  // Pass the function to handle "Back to Sign in" click
+                onBackToSignIn={handleBackToSignIn}  
                 onForgotPasswordClick={handleForgotPasswordClick}
               />
             </div>
@@ -213,27 +208,28 @@ const handleCloseForgotPasswordGenerateOtpPopup = () => {
             </div>
           )}
 
-{showForgotPassword && (
-    <div className="z-9999 fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-      <ForgotPassword
-        onSignUpRequest={handleSignUpRequest}
-        handleGenerateOtpClick={handleForgotPasswordGenerateOtpClick}
-        onBackToSignIn={handleBackToSignIn}
-        onSignUpClick={handleSignUpClick}
-        onCloseForgotPasswordPopup={handleCloseForgotPasswordPopup}
-      />
-    </div>
-  )}
+          {showForgotPassword && (
+            <div className="z-9999 fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+              <ForgotPassword
+                onSignUpRequest={handleSignUpRequest}
+                handleGenerateOtpClick={handleForgotPasswordGenerateOtpClick}
+                onSignUpFromSignInWithOtp={handleSignUpFromSignInWithOtp}
+                onBackToSignIn={handleBackToSignIn}
+                onSignUpClick={handleSignUpClick}
+                onCloseForgotPasswordPopup={handleCloseForgotPasswordPopup}
+              />
+            </div>
+          )}
 
-  {showForgotPasswordGenerateOtp && (
-    <div className="z-9999 fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-      <ForgotPasswordGenerateOtp
-        onCloseForgotPasswordGenerateOtpPopup={handleCloseForgotPasswordGenerateOtpPopup}
-        onSignUpFromGenerateOtp={handleSignUpFromGenerateOtp}
-        onBackToSignIn={handleBackToSignIn}
-      />
-    </div>
-  )}
+          {showForgotPasswordGenerateOtp && (
+            <div className="z-9999 fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+              <ForgotPasswordGenerateOtp
+                onCloseForgotPasswordGenerateOtpPopup={handleCloseForgotPasswordGenerateOtpPopup}
+                onSignUpFromGenerateOtp={handleSignUpFromGenerateOtp}
+                onBackToSignIn={handleBackToSignIn}
+              />
+            </div>
+          )}
 
         </div>
       </div>

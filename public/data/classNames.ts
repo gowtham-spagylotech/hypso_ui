@@ -1,0 +1,16 @@
+export const formFieldWrapper = "w-full";
+export const formFieldLabel = "mt-6 mb-4 text-xl font-medium";
+export const selectInput = "w-full bg-transparent px-5 py-3 focus:outline-none border rounded-md text-base pr-3";
+export const textInput = "w-full border p-2 focus:outline-none rounded-md text-base";
+export const textareaInput = "w-full border p-2 focus:outline-none rounded-md";
+export const dateInput = "w-full border p-2 focus:outline-none rounded-md text-base";
+export const fileInputWrapper = "pare";
+export const fileInputLabel = "mt-6 mb-4 text-xl font-medium";
+export const fileInputContainer = "flex items-center justify-center border-dashed rounded-2xl w-full";
+export const fileInputLabelContainer = "flex flex-col items-center flex-wrap justify-center w-full cursor-pointer bg-[var(--bg-2)] rounded-2xl border border-dashed";
+export const fileIcon = "w-[60px] h-[60px]";
+export const fileDragDropText = "h3 clr-neutral-500 text-center mt-4 mb-3";
+export const fileSelectFilesButton = "inline-block py-3 px-6 rounded-full bg-[#354764] text-white mb-10";
+export const fileInfoContainer = "flex items-center justify-center flex-row flex-wrap gap-5";
+export const fileInformationIcon = "w-5 h-5";
+export const fileInformationText = "block mb-0 clr-neutral-500";
