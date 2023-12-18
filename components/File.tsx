@@ -9,7 +9,7 @@ import * as classNames from "@/public/data/classNames";
 interface FileInputProps {
   className?: string;
   label: string;
-  value: string; 
+  // value: string; 
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;  
 }
 

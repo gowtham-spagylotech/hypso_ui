@@ -1,5 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { Menu, Transition } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -41,6 +43,16 @@ export default function RootLayout({
   };
 
   const heading = convertToTitleCase(path);
+  const [showSubMenu, setShowSubMenu] = useState(false);
+
+  const handleCategoryHover = () => {
+    setShowSubMenu(true);
+  };
+
+  const handleCategoryLeave = () => {
+    setShowSubMenu(false);
+  };
+
 
   return (
     <>
@@ -108,20 +120,70 @@ export default function RootLayout({
                     <li>
                       <Link
                         href="/my-account"
-                        className={`link flex items-center gap-2 clr-neutral-500 hover:text-primary ${
-                          path === "/my-account" && "text-primary"
-                        }`}
+                        className={`link flex items-center gap-2 clr-neutral-500 hover:text-primary ${path === "/my-account" && "text-primary"
+                          }`}
                       >
-                         <UserIcon />
+                        <UserIcon />
                         <span className="block font-medium">My Account</span>
                       </Link>
                     </li>
+
+
+                    <li>
+                      <div className="profile-dropdown">
+                        <div
+                          className="category"
+                          onMouseEnter={handleCategoryHover}
+                          onMouseLeave={handleCategoryLeave}
+                        >
+                          <Link
+                            href="#"
+                            className={`link flex items-center gap-2 clr-neutral-500 hover:text-primary "text-primary"`}
+                          >
+                            <i className="lab la-buromobelexperte text-2xl"></i>
+                            Category
+                          </Link>
+                          <Transition
+                            show={showSubMenu}
+                            enter="transition-opacity duration-75"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="transition-opacity duration-150"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                          >
+                            {(ref) => (
+                              <div
+                                ref={ref}
+                                className={`link flex flex-col gap-3 clr-neutral-500 `}
+                              >
+                                <Link
+                                  href="/add-category"
+                                  className={`link mt-3 flex gap-3 clr-neutral-500 hover:text-primary "text-primary"`}
+                                >
+                                  <i className="las la-plus-circle text-2xl"></i>
+                                  Create Category
+                                </Link>
+                                <Link
+                                  href="/edit-category"
+                                  className={`link flex gap-3 clr-neutral-500 hover:text-primary "text-primary"`}
+                                >
+                                  <i className="las la-edit text-2xl"></i>
+                                  Edit Category
+                                </Link>
+                              </div>
+                            )}
+                          </Transition>
+                        </div>
+                      </div>
+                    </li>
+
+
                     <li>
                       <Link
                         href="/shop-business"
-                        className={`link flex items-center gap-2 clr-neutral-500 hover:text-primary ${
-                          path === "/shop-business" && "text-primary"
-                        }`}
+                        className={`link flex items-center gap-2 clr-neutral-500 hover:text-primary ${path === "/shop-business" && "text-primary"
+                          }`}
                       >
                         <ShopIcon />
                         <span className="block font-medium">
@@ -132,9 +194,8 @@ export default function RootLayout({
                     <li>
                       <Link
                         href="ads"
-                        className={`link flex items-center gap-2 clr-neutral-500 hover:text-primary ${
-                          path === "ads" && "text-primary"
-                        }`}
+                        className={`link flex items-center gap-2 clr-neutral-500 hover:text-primary ${path === "ads" && "text-primary"
+                          }`}
                       >
                         <AdIcon />
                         <span className="block font-medium">My Ads </span>
@@ -143,9 +204,8 @@ export default function RootLayout({
                     <li>
                       <Link
                         href="/requeriments"
-                        className={`link flex items-center gap-2 clr-neutral-500 hover:text-primary ${
-                          path === "/requeriments" && "text-primary"
-                        }`}
+                        className={`link flex items-center gap-2 clr-neutral-500 hover:text-primary ${path === "/requeriments" && "text-primary"
+                          }`}
                       >
                         <RequerimentIcon />
                         <span className="block font-medium">
@@ -156,9 +216,8 @@ export default function RootLayout({
                     <li>
                       <Link
                         href="/reviews"
-                        className={`link flex items-center gap-2 clr-neutral-500 hover:text-primary ${
-                          path === "reviews" && "text-primary"
-                        }`}
+                        className={`link flex items-center gap-2 clr-neutral-500 hover:text-primary ${path === "reviews" && "text-primary"
+                          }`}
                       >
                         <ReviewIcon />
                         <span className="block font-medium"> My Reviews</span>
@@ -167,9 +226,8 @@ export default function RootLayout({
                     <li>
                       <Link
                         href="/"
-                        className={`link flex items-center gap-2 clr-neutral-500 hover:text-primary ${
-                          path === "/" && "text-primary"
-                        }`}
+                        className={`link flex items-center gap-2 clr-neutral-500 hover:text-primary ${path === "/" && "text-primary"
+                          }`}
                       >
                         <LogOutIcon />
                         <span className="block font-medium"> Logout</span>

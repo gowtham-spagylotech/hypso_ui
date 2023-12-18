@@ -6,12 +6,11 @@ import Accordion from "@/components/Accordion";
 import Select from "@/components/Select";
 import Text from "@/components/Text";
 import Textarea from "@/components/Textarea";
-import Date from "@/components/Date";
 import File from "@/components/File";
 import LabelPTag from "@/components/LabelPTag";
 import BtnCreate from "@/components/BtnCreate";
 import * as fieldTypes from "@/public/data/fieldTypes";
-import { addPost } from "@/public/data/addPost";
+import { addService } from "@/public/data/addService";
 import Link from "next/link";
 
 const {
@@ -84,18 +83,6 @@ const Page = () => {
               </div>
             )}
 
-            {field.type === fieldTypeDate && (
-              <div className={classNames.formFieldWrapper}>
-                <LabelPTag className={classNames.formFieldLabel} label={field.label} />
-                <Date
-                  className={classNames.dateInput}
-                  placeholder={field.placeholder}
-                  value={fieldValues[field.name] || ""}
-                  onChange={(value) => handleFieldChange(field.name, value)}
-                />
-              </div>
-            )}
-
             {field.type === fieldTypeFile && (
               <div className={classNames.formFieldWrapper}>
                 <File
@@ -129,7 +116,7 @@ const Page = () => {
     <div className="py-[30px] lg:py-[60px] bg-[var(--bg-2)] px-3">
       <div className="container">
         <div className="w-full xl:w-[83.33%] xxl:w-[100%] mx-auto">
-          {addPost.sections.map((section, index) => (
+          {addService.sections.map((section, index) => (
             <div key={index} className="bg-white p-4 sm:p-6 md:p-10 mb-5 sm:mb-8 md:mb-12 rounded-2xl">
               <Accordion
                 buttonContent={(open) => (

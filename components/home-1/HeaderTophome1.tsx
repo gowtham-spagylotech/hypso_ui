@@ -169,7 +169,7 @@ const HeaderTop = () => {
                 onSignUpRequest={handleSignUpRequest}
                 handleSignInWithOtpClick={handleSignInWithOtpClick}
                 onSignUpFromSignInWithOtp={handleSignUpFromSignInWithOtp}
-                onBackToSignIn={handleBackToSignIn}  
+                onBackToSignIn={handleBackToSignIn}
                 onForgotPasswordClick={handleForgotPasswordClick}
               />
             </div>

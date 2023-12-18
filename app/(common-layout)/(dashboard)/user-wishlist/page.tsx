@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import { Tooltip } from "react-tooltip";
-import HotelListingList from "@/components/HotelListingList";
-import { featuredHotels } from "@/public/data/featuredhotel";
+// import HotelListingList from "@/components/HotelListingList";
+// import { featuredHotels } from "@/public/data/featuredhotel";
 
 const Page = () => {
   const tooltipStyle = {
@@ -37,9 +37,9 @@ const Page = () => {
             </div>
             <h5 className="font-medium mb-3"> Wishlist (4) </h5>
             <div className="grid grid-cols-12 gap-4">
-              {featuredHotels.map((item) => (
+              {/* {featuredHotels.map((item) => (
                 <HotelListingList key={item.id} item={item} />
-              ))}
+              ))} */}
             </div>
           </div>
         </li>

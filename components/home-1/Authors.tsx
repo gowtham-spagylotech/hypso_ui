@@ -8,10 +8,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
-
-// import required modules
 import { Navigation } from "swiper";
-import { agents } from "@/public/data/agent";
+// import { agents } from "@/public/data/agent";
 import AgentCard from "./AgentCard";
 
 const Authors = () => {
@@ -66,11 +64,11 @@ const Authors = () => {
             },
           }}
           className="auth-slider">
-          {agents.map((item) => (
+          {/* {agents.map((item) => (
             <SwiperSlide key={item.id}>
               <AgentCard item={item} />
             </SwiperSlide>
-          ))}
+          ))} */}
         </Swiper>
       </div>
       <div className="z-10 relative mt-[110px] after:bg-[url('/img/cta-bg.png')] after:absolute after:left-0 3xl:after:left-[12%] 4xl:after:left-[16%] after:w-[98%] after:mx-auto lg:after:w-[84%] after:h-full after:right-0 after:bottom-0 after:bg-[#c2c3f7]">

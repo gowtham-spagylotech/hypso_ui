@@ -162,14 +162,16 @@ button.close-btn {
     justify-content: flex-end;
 }
 
-
+.w-1\/2.w-100 {
+    width: 50%;
+}
 
 @media only screen and (max-width: 992px) {
     .parent-form {
         flex-wrap: wrap;
     }
 
-    .w-100 {
+    .w-1\/2.w-100  {
         width: 100%;
     }
 }

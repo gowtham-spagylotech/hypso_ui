@@ -3,17 +3,30 @@ import Image from "next/image";
 import Link from "next/link";
 import LoginImg from "@/public/img/login-img.png";
 import SignUp from "./SignUp";
+import { ForgotPassworddata } from "@/public/data/forgotpassword";
+import Number from "@/components/Number";
 
-const ForgotPassword = ({
-    // Binding element 'parameter' implicitly has an 'any' type.
+interface ForgotPasswordProps {
+    onSignInRequest: () => void;
+    onSignUpRequest: () => void;
+    onCloseForgotPasswordPopup: () => void;
+    handleGenerateOtpClick: () => void;
+    onSignUpFromSignInWithOtp: () => void;
+    onBackToSignIn: () => void;
+    onSignUpClick: () => void;
+}
+
+const ForgotPassword: React.FC<ForgotPasswordProps> = ({
+    onSignInRequest,
     onSignUpRequest,
     onCloseForgotPasswordPopup,
     handleGenerateOtpClick,
     onSignUpFromSignInWithOtp,
     onBackToSignIn,
-    onSignUpClick,  
+    onSignUpClick,
 }) => {
     const [showSignUp, setShowSignUp] = useState(false);
+    const [whatsappNumber, setWhatsappNumber] = useState("");
 
     const handleSignUpClick = () => {
         setShowSignUp(true);
@@ -46,19 +59,24 @@ const ForgotPassword = ({
                         <h3 className="mb-4 h3"> Welcome Back! </h3>
                         <p className="mb-10"> Forgot your password? No Worries! </p>
                         <div className="grid grid-cols-12 gap-4">
-                            <div className="col-span-12">
-                                <label
-                                    htmlFor="enter-whatsappnumber"
-                                    className="text-base sm:text-lg md:text-xl font-medium block mb-3">
-                                    Enter Your WhatsApp Number
-                                </label>
-                                <input
-                                    type="number"
-                                    className="w-full bg-[var(--bg-1)] border focus:outline-none rounded-full py-3 px-5"
-                                    placeholder="Enter Your WhatsApp Number"
-                                    id="enter-whatsappnumber"
-                                />
-                            </div>
+                            {ForgotPassworddata.sections[0].fields.map((field, index) => (
+                                <div className="col-span-12" key={index}>
+                                    <label
+                                        htmlFor={`signup-${field.label.toLowerCase().replace(/\s/g, "-")}`}
+                                        className="text-base sm:text-lg md:text-xl font-normal sm:font-medium block mb-3"
+                                    >
+                                        {field.label}
+                                    </label>
+                                    {field.type === "number" && (
+                                        <Number
+                                            className="w-full bg-[var(--bg-1)] border focus:outline-none rounded-full py-3 px-5 mb-3 md:col-span-12"
+                                            placeholder={`Enter ${field.label}`}
+                                            value={whatsappNumber}
+                                            onChange={(value) => setWhatsappNumber(value)}
+                                        />
+                                    )}
+                                </div>
+                            ))}
 
                             <div className="col-span-12">
                                 <p className="mb-0">
@@ -87,7 +105,7 @@ const ForgotPassword = ({
                                 </Link>
                             </div>
                             {showSignUp && (
-                                <SignUp onCloseSignUpPopup={() => setShowSignUp(false)} />
+                                <SignUp onSignInRequest={onSignInRequest} onCloseSignUpPopup={() => setShowSignUp(false)} />
                             )}
 
                         </div>

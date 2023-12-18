@@ -2,14 +2,14 @@
 import aboutel1 from "@/public/img/about-el-1.png";
 import aboutel2 from "@/public/img/about-el-2.png";
 import Image from "next/image";
-import WorkingProcess from "@/components/home-6/WorkingProcess";
-import Explore from "@/components/home-2/Explore";
-import Counter from "@/components/home-2/Counter";
+// import WorkingProcess from "@/components/home-6/WorkingProcess";
+// import Explore from "@/components/home-2/Explore";
+// import Counter from "@/components/home-2/Counter";
 import Author from "@/components/home-1/Authors";
 import Benefit from "@/components/home-1/Benefit";
-import Testimonial from "@/components/home-2/Testimonial";
-import MobileApp from "@/components/home-2/MobileApp";
-import Faq from "@/components/home-1/Faq";
+// import Testimonial from "@/components/home-2/Testimonial";
+// import MobileApp from "@/components/home-2/MobileApp";
+// import Faq from "@/components/home-1/Faq";
 import Link from "next/link";
 import { HandThumbUpIcon } from "@heroicons/react/24/outline";
 import SubHeadingBtn from "@/components/SubHeadingBtn";
@@ -142,7 +142,7 @@ const page = () => {
         </div>
       </section>
       {/* How it work section */}
-      <WorkingProcess />
+      {/* <WorkingProcess /> */}
 
       {/* Why choose us */}
       <div className="py-[60px] md:py-[120px] bg-[var(--bg-2)] relative z-[1] px-3">
@@ -261,9 +261,9 @@ const page = () => {
       </div>
 
       {/* Explore properties */}
-      <Explore />
+      {/* <Explore /> */}
       {/* Counter */}
-      <Counter />
+      {/* <Counter /> */}
       {/* Authors */}
       <Author />
       {/* Explore section */}
@@ -271,11 +271,11 @@ const page = () => {
         <Benefit />
       </div>
       {/* Testimonail */}
-      <Testimonial />
+      {/* <Testimonial /> */}
       {/* Mobile app */}
-      <MobileApp />
+      {/* <MobileApp /> */}
       {/* Faq  */}
-      <Faq />
+      {/* <Faq /> */}
     </main>
   );
 };

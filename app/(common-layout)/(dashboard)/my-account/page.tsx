@@ -252,7 +252,7 @@ const Page = () => {
                     className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-600"
                     onClick={togglePasswordVisibility}
                   >
-                    {isPasswordVisible ? eyeOpenIcon : eyeClosedIcon }
+                    {isPasswordVisible ? eyeOpenIcon : eyeClosedIcon}
                   </span>
                 </div>
               </div>
@@ -273,7 +273,7 @@ const Page = () => {
                     className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-600"
                     onClick={togglePasswordVisibility}
                   >
-                    {isPasswordVisible ? eyeOpenIcon : eyeClosedIcon }
+                    {isPasswordVisible ? eyeOpenIcon : eyeClosedIcon}
                   </span>
                 </div>
               </div>
@@ -294,7 +294,7 @@ const Page = () => {
                     className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-600"
                     onClick={togglePasswordVisibility}
                   >
-                    {isPasswordVisible ? eyeOpenIcon : eyeClosedIcon }
+                    {isPasswordVisible ? eyeOpenIcon : eyeClosedIcon}
                   </span>
                 </div>
               </div>

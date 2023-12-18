@@ -1,14 +1,22 @@
 // Radio.tsx
-import React from "react";
+import React, { useState } from "react";
 import * as classNames from "@/public/data/classNames";
 
 interface RadioInputProps {
     label: string;
     options: string[];
     className?: string;
+    onChange: (value: string) => void;
 }
 
-const Radio: React.FC<RadioInputProps> = ({ label, options, className }) => {
+const Radio: React.FC<RadioInputProps> = ({ label, options, className, onChange }) => {
+    const [selectedOption, setSelectedOption] = useState<string | null>(null);
+
+    const handleOptionChange = (option: string) => {
+        setSelectedOption(option);
+        onChange(option);
+    };
+
     return (
         <div className={className}>
             <p className={classNames.formFieldLabel}>{label} :</p>
@@ -19,8 +27,11 @@ const Radio: React.FC<RadioInputProps> = ({ label, options, className }) => {
                             <input
                                 className="accent-[var(--primary)] scale-125"
                                 type="radio"
-                                name={`${label.toLowerCase()}-${index}`}
+                                name={`${label.toLowerCase()}-group`}
                                 id={`${label.toLowerCase()}-${index}`}
+                                value={option}
+                                checked={option === selectedOption}
+                                onChange={() => handleOptionChange(option)}
                             />
                             <label
                                 className="inline-block text-lg font-medium cursor-pointer"

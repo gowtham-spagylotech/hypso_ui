@@ -1,5 +1,6 @@
 "use client";
 import Accordion from "@/components/Accordion";
+import { useState } from "react";
 import CheckboxCustom from "@/components/Checkbox";
 import CustomRangeSlider from "@/components/RangeSlider";
 import { propertyAmenities } from "@/public/data/addpropertyAmenities";
@@ -29,17 +30,40 @@ const {
   fieldTypeDate,
   fieldTypeFile,
   fieldTypeRadio,
-  fieldTypeSocialIcon,
+  fieldTypeSocialIcon
 } = fieldTypes;
 
+// interface FieldValues {
+//   [key: string]: string | File | null;
+// }
+
+// interface FileValues {
+//   [key: string]: File | null;
+// }
+
 const Page = () => {
-  const renderFormFields = (fields: string | any[]) => {
+  const [fieldValues, setFieldValues] = useState({
+    area: "Saravanampatti,Coimbatore",
+    "city/town": "Coimbatore",
+    "state": "Tamil nadu",
+    "country": "India",
+  });
+
+  const handleFieldChange = (name, value) => {
+    setFieldValues((prevFieldValues) => ({
+      ...prevFieldValues,
+      [name]: value,
+    }));
+  };
+
+  const handleCreateShop = () => {
+    console.log('Button clicked');
+    console.log('Created Shop:', fieldValues);
+  };
+
+  const renderFormFields = (fields) => {
     const numberOfColumns = 2;
-
-    // Calculate the number of rows needed
     const numberOfRows = Math.ceil(fields.length / numberOfColumns);
-
-    // Create an array of arrays representing rows and columns
     const rows = Array.from({ length: numberOfRows }, (_, rowIndex) =>
       fields.slice(rowIndex * numberOfColumns, (rowIndex + 1) * numberOfColumns)
     );
@@ -48,64 +72,116 @@ const Page = () => {
       <div key={rowIndex} className="flex gap-5 mb-4 parent-form">
         {row.map((field, index) => (
           <div key={index} className={`w-1/${numberOfColumns} w-100`}>
-
-            {field.type === fieldTypeSelect && (
-              <div className={classNames.formFieldWrapper}>
-                <LabelPTag className={classNames.formFieldLabel} label={field.label} />
-                <Select className={classNames.selectInput} options={field.options} />
-              </div>
-            )}
-
-            {field.type === fieldTypeRadio && (
-              <Radio
-                className={classNames.radioInput}
-                label={field.label}
-                options={field.options}
-              />
-            )}
-
-            {field.type === fieldTypeSocialIcon && (
-              <SocialIcon
-                className={field.className}
-                iconName={field.iconName}
-                placeholder={field.placeholder}
-              />
-            )}
-
-            {field.type === fieldTypeText && (
-              <div className={classNames.formFieldWrapper}>
-                <LabelPTag className={classNames.formFieldLabel} label={field.label} />
-                <Text className={classNames.textInput} placeholder={field.placeholder} />
-              </div>
-            )}
-
-            {field.type === fieldTypeTextarea && (
-              <div className={classNames.formFieldWrapper}>
-                <LabelPTag className={classNames.formFieldLabel} label={field.label} />
-                <Textarea className={classNames.textareaInput} placeholder={field.placeholder} />
-              </div>
-            )}
-
-            {field.type === fieldTypeDate && (
-              <div className={classNames.formFieldWrapper}>
-                <LabelPTag className={classNames.formFieldLabel} label={field.label} />
-                <Date className={classNames.dateInput} placeholder={field.placeholder} />
-              </div>
-            )}
-
-            {field.type === fieldTypeFile && (
-              <File
-                className={classNames.fileInputWrapper}
-                label={field.label}
-              />
-            )}
+            {renderFormField(field)}
           </div>
-        ))
-        }
-      </div >
+        ))}
+      </div>
     ));
   };
 
+  const renderFormField = (field) => {
+    switch (field.type) {
+      case fieldTypeSelect:
+        return (
+          <div className={classNames.formFieldWrapper}>
+            <LabelPTag className={classNames.formFieldLabel} label={field.label} />
+            <Select
+              className={classNames.selectInput}
+              options={field.options}
+              value={fieldValues[field.name] || ''}
+              onChange={(value) => handleFieldChange(field.name, value)}
+              placeholder={field.placeholder}
+            />
+          </div>
+        );
+
+      case fieldTypeRadio:
+        return (
+          <Radio
+            className={''}
+            label={field.label}
+            options={field.options}
+            onChange={(value) => handleFieldChange(field.name, value)}
+          />
+        );
+
+      case fieldTypeSocialIcon:
+        return (
+          <SocialIcon
+            className={field.className}
+            iconName={field.iconName}
+            placeholder={field.placeholder}
+            value={fieldValues[field.name] || ''}
+            onChange={(value) => handleFieldChange(field.name, value)}
+          />
+        );
+
+      case fieldTypeText:
+        return (
+          <div className={classNames.formFieldWrapper}>
+            <p className={classNames.formFieldLabel}>{field.label} :</p>
+            <Text
+              className={classNames.textInput}
+              placeholder={field.placeholder}
+              value={fieldValues[field.name] || ''}
+              onChange={(value) => handleFieldChange(field.name, value)}
+            />
+          </div>
+        );
+
+      case fieldTypeTextarea:
+        return (
+          <div className={classNames.formFieldWrapper}>
+            <LabelPTag className={classNames.formFieldLabel} label={field.label} />
+            <Textarea
+              className={classNames.textareaInput}
+              placeholder={field.placeholder}
+              value={fieldValues[field.name] || ''}
+              onChange={(value) => handleFieldChange(field.name, value)}
+            />
+          </div>
+        );
+
+      case fieldTypeDate:
+        return (
+          <div className={classNames.formFieldWrapper}>
+            <LabelPTag className={classNames.formFieldLabel} label={field.label} />
+            <Date
+              className={classNames.dateInput}
+              placeholder={field.placeholder}
+              value={fieldValues[field.name] || ''}
+              onChange={(value) => handleFieldChange(field.name, value)}
+            />
+          </div>
+        );
+
+      case fieldTypeFile:
+        return (
+          <div className={classNames.formFieldWrapper}>
+            <File
+              className={classNames.fileInputWrapper}
+              label={field.label}
+              onChange={(e) => handleFileChange(field.name, e)}
+            />
+            <p className="mt-6">File: {fieldValues[field.name] ? fieldValues[field.name].name : 'No file selected'}</p>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  const handleFileChange = (name, event) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      setFieldValues((prevFieldValues) => ({
+        ...prevFieldValues,
+        [name]: file,
+      }));
+    }
+  };
 
   return (
     <div className="py-[30px] lg:py-[60px] bg-[var(--bg-2)] px-3">
@@ -118,7 +194,7 @@ const Page = () => {
                   <div className="rounded-2xl flex justify-between items-center">
                     <h3 className="h3">{section.title}</h3>
                     <ChevronDownIcon
-                      className={`w-5 h-5 sm:w-6 sm:h-6 duration-300 ${open ? "rotate-180" : ""}`}
+                      className={`w-5 h-5 sm:w-6 sm:h-6 duration-300 ${open ? 'rotate-180' : ''}`}
                     />
                   </div>
                 )}
@@ -126,15 +202,12 @@ const Page = () => {
               >
                 <div className="pt-4">
                   <div className="border-t pt-4">
-
-                    {index === 0 && <BtnCreate />} {/* Render BtnCreate at the top of the first section */}
-
-                    {renderFormFields(section.fields)}</div>
+                    {index === 0 && <BtnCreate onClick={handleCreateShop} />} {/* Render BtnCreate at the top of the first section */}
+                    {renderFormFields(section.fields)}
+                  </div>
                 </div>
               </Accordion>
-
-              {index === addShop.sections.length - 1 && <BtnCreate />} {/* Render BtnCreate at the bottom of the last section only */}
-
+              {index === addShop.sections.length - 1 && <BtnCreate onClick={handleCreateShop} />} {/* Render BtnCreate at the bottom of the last section only */}
             </div>
           ))}
         </div>

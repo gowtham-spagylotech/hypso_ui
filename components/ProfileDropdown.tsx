@@ -51,7 +51,8 @@ export default function ProfileDropdown() {
                     </span>
                   </div>
                 </div>
-              </Menu.Item>
+              </Menu.Item>  
+              
               <Menu.Item>
                 {({ active }) => (
                   <button
