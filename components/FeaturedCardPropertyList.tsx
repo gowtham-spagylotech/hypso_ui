@@ -1,3 +1,4 @@
+'use client'
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
@@ -107,20 +108,6 @@ const FeaturedCardPropertyList = ({ item }: any) => {
             </div>
           )}
 
-          {/* <Link
-            href="/property-list"
-            className="absolute top-4 z-10 inline-block text-primary left-4 bg-white rounded-full py-2 px-4">
-            For {type}
-          </Link>
-          <button
-            onClick={handleFavorite}
-            className="absolute z-10 inline-block text-primary top-4 right-4 rounded-full bg-white p-2.5 ">
-            {favourite ? (
-              <HeartIcon className="w-5 h-5 text-[var(--tertiary)]" />
-            ) : (
-              <HeartIconOutline />
-            )}
-          </button> */}
           {popular && (
             <span className="absolute">
               <span className="inline-block py-2.5 px-9 text-sm font-medium rounded-t rounded-br bg-primary relative -left-4 bottom-5 text-white z-10 before:bg-[#2628A6] before:absolute before:w-2 before:h-2 before:rounded-bl-md before:-bottom-2 before:left-0 ">

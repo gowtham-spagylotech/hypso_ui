@@ -1,5 +1,4 @@
 'use client'
-import { Tab } from "@headlessui/react";
 
 
 function classNames(...classes: any[]) {
@@ -8,58 +7,34 @@ function classNames(...classes: any[]) {
 
 const TabList = ({ }) => {
     return (
-        <Tab.List className="col-span-12 border rounded-2xl mb-4 px-4 lg:mb-6 flex flex-wrap justify-between">
-            <Tab
-                className={({ selected }) =>
-                    classNames(
-                        "focus:outline-none flex gap-2 items-center font-medium py-4 px-3",
-                        selected ? "text-primary border-primary border-b" : ""
-                    )
-                }
-            >
-                <span className="inline-block"> All </span>
-            </Tab>
-            <Tab
-                className={({ selected }) =>
-                    classNames(
-                        "focus:outline-none flex gap-2 items-center font-medium py-4 px-3",
-                        selected ? "text-primary border-primary border-b" : ""
-                    )
-                }
-            >
-                <span className="inline-block"> Pending </span>
-            </Tab>
-            <Tab
-                className={({ selected }) =>
-                    classNames(
-                        "focus:outline-none flex gap-2 items-center font-medium py-4 px-3",
-                        selected ? "text-primary border-primary border-b" : ""
-                    )
-                }
-            >
-                <span className="inline-block"> Approved </span>
-            </Tab>
-            <Tab
-                className={({ selected }) =>
-                    classNames(
-                        "focus:outline-none flex gap-2 items-center font-medium py-4 px-3",
-                        selected ? "text-primary border-primary border-b" : ""
-                    )
-                }
-            >
-                <span className="inline-block"> Rejected </span>
-            </Tab>
-            <Tab
-                className={({ selected }) =>
-                    classNames(
-                        "focus:outline-none flex gap-2 items-center font-medium py-4 px-3",
-                        selected ? "text-primary border-primary border-b" : ""
-                    )
-                }
-            >
-                <span className="inline-block"> Delete requests/ Deleted </span>
-            </Tab>
-        </Tab.List>
+
+        <div className="mb-4 border-b border-gray-200 dark:border-gray-700">
+            <ul className="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+                <li className="me-2" role="presentation">
+                    <button className="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">All</button>
+                </li>
+                <li className="me-2" role="presentation">
+                    <button className="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="false">
+                        Pending
+                    </button>
+                </li>
+                <li className="me-2" role="presentation">
+                    <button className="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">
+                        Approved
+                    </button>
+                </li>
+                <li role="presentation">
+                    <button className="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="contacts-tab" data-tabs-target="#contacts" type="button" role="tab" aria-controls="contacts" aria-selected="false">
+                        Rejected
+                    </button>
+                </li>
+                <li role="presentation">
+                    <button className="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="contacts-tab" data-tabs-target="#contacts" type="button" role="tab" aria-controls="contacts" aria-selected="false">
+                        Delete requests/ Deleted
+                    </button>
+                </li>
+            </ul>
+        </div>
     );
 };
 

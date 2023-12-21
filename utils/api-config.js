@@ -1,8 +1,8 @@
 'use client'
 
-// api-config.js
+// ApiConfig.tsx
 const ApiConfig = {
-  myPostApiUrl: 'http://localhost:5001/modules/services/get-service/7',
+  myPostApiUrl: 'http://localhost:5001/modules/services/get-services',
 };
 
 export default ApiConfig;

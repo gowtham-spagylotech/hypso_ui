@@ -1,4 +1,4 @@
-"use client";
+
 import { Tab } from "@headlessui/react";
 import TabList from "@/components/TabList";
 import ShopTabPanel from "@/components/ShopTabPanel";

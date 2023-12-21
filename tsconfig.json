@@ -23,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(common-layout)/(dashboard)/my-post/page.tsx", "components/PostTabPanel.tsx", "utils/fetch_data.js", "utils/api-config.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(common-layout)/(dashboard)/my-post/page.js", "components/PostTabPanel.js", "utils/fetch_data.js", "utils/api-config.js"],
   "exclude": ["node_modules"]
 }

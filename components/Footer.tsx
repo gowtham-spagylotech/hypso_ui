@@ -154,7 +154,7 @@ const Footer = () => {
       <div className="container">
         <div className="row">
           <div className="col-span-12">
-            <div className="py-8 border-t border-[#3638bd] text-white mb-70">
+            <div className="py-8 border-t border-[#3638bd] text-white">
               <div className="grid grid-cols-12 gap-4 ">
                 <div className="col-span-12 lg:col-span-6">
                   <p className="m-0 text-center lg:text-start">
