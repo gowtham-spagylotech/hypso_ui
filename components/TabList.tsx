@@ -1,3 +1,4 @@
+'use client'
 import { Tab } from "@headlessui/react";
 
 
@@ -59,7 +60,6 @@ const TabList = ({ }) => {
                 <span className="inline-block"> Delete requests/ Deleted </span>
             </Tab>
         </Tab.List>
-
     );
 };
 

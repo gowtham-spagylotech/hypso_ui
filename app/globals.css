@@ -166,12 +166,26 @@ button.close-btn {
     width: 50%;
 }
 
+.header-fix{
+    position: fixed;
+    width: 100%;
+    z-index: 9999;
+}
+
+.mt-300 {
+    margin-top: 300px;
+}
+
+.mb-70{
+    margin-bottom: 70px;
+}
+
 @media only screen and (max-width: 992px) {
     .parent-form {
         flex-wrap: wrap;
     }
 
-    .w-1\/2.w-100  {
+    .w-1\/2.w-100 {
         width: 100%;
     }
 }

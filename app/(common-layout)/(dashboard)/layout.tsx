@@ -1,4 +1,5 @@
 "use client";
+
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
@@ -18,11 +19,13 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
 
+
 export default function RootLayout({
   children,
-}: {
+} : {
   children: React.ReactNode;
 }) {
+
   const path = usePathname();
   const convertToTitleCase = (str: string) => {
     // Remove leading slash

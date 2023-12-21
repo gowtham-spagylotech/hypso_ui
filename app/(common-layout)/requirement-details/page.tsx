@@ -50,7 +50,7 @@ const Page = () => {
         <div className="bg-[var(--bg-2)]">
             <div className="py-4">
                 <div className="container-fluid">
-                    <div className="grid grid-cols-12 gap-4 lg:gap-6 px-3 lg:px-4">
+                    <div className="grid grid-cols-12 gap-4 lg:gap-6 px-3 lg:px-4 mt-300">
                         <div className="col-span-12 lg:col-span-4">
                             <div className="grid grid-cols-12 gap-4 lg:gap-6">
                                 <div className="col-span-12 md:col-span-6">

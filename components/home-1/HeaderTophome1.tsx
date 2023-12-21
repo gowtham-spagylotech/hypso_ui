@@ -9,6 +9,7 @@ import SignInWithOtp from "./SignInWithOtp";
 import GenerateOtp from "./GenerateOtp";
 import ForgotPassword from "./ForgotPassword";
 import ForgotPasswordGenerateOtp from "./ForgotPasswordGenerateOtp";
+import SearchBar from "./SearchBar";
 
 const HeaderTop = () => {
   const [showSignUpPopup, setShowSignUpPopup] = useState(false);
@@ -114,7 +115,7 @@ const HeaderTop = () => {
         src="/img/primary-hero-el-2.png"
         alt="image"
       />
-      <div className="bg-[var(--bg-1)] boder-b-2 border-[var(--border)]">
+      <div className="bg-[var(--bg-1)] boder-b-2 border-[var(--border)] header-fix">
         <div className="container mx-auto flex justify-between py-3 lg:py-5 gap-1">
           <Image
             src="/img/logo.png"
@@ -135,7 +136,7 @@ const HeaderTop = () => {
 
           <div className="flex divide-x-[1px]">
             <div className="flex items-center gap-5 px-2 xl:px-4">
-              <i className="las la-certificate bg-primary text-white text-4xl p-2 rounded-full"></i>
+              <i className="las la-certificate bg-primary text-[var(--primary-light)] text-4xl p-2 rounded-full"></i>
               <div className="flex-col hidden lg:flex">
                 <span className="text-base">Add your shop/business</span>
               </div>
@@ -148,6 +149,13 @@ const HeaderTop = () => {
               </div>
             </div>
 
+
+            <div className="flex items-center gap-5 px-2 xl:px-4">
+              <i className="las la-tools bg-[var(--tertiary)] text-[var(--neutral-700)] text-4xl p-2 rounded-full"></i>
+              <div className="flex-col hidden lg:flex">
+                <span className="text-base">Create an service</span>
+              </div>
+            </div>
           </div>
           <NotificationDropdown />
           <ProfileDropdown />
@@ -232,9 +240,9 @@ const HeaderTop = () => {
           )}
 
         </div>
+        {/* <SearchBar /> */}
       </div>
     </>
-
 
 
   );

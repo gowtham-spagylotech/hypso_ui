@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import errorImg from "@/public/img/error-img.png";
 import Link from "next/link";
