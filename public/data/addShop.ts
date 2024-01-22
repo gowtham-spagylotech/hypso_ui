@@ -3,25 +3,31 @@ export const addShop = {
   "sections": [
     {
       "title": "Create Shop/Business",
+      "section_fields_title":"shopInfo",
       "fields": [
         { "type": "select", "label": "Category", "name": "category", "placeholder": "Select an Option", "options": ["Real estate", "Used for sale", "Rental", "Jobs", "Event managements", "Service managements", "Products"] },
         { "type": "select", "label": "Subcategory", "name": "subcategory", "placeholder": "Select an Option", "options": ["Home", "Land", "Apartment", "Mobile", "Car", "Bike", "Camera"] },
-        { "type": "text", "label": "Shop/Business type", "name": "shop/businesstype", "placeholder": "Your shop/business type" },
-        { "type": "text", "label": "Shop name", "name": "shopname", "placeholder": "Your Shop name" },
-        { "type": "text", "label": "Email id", "name": "emailid", "placeholder": "Your email id" },
+        { "type": "text", "label": "Shop/Business type", "name": "shoptype", "placeholder": "Your shop/business type" },
+        { "type": "text", "label": "Shop/Business name", "name": "shopname", "placeholder": "Your Shop name" },
+        { "type": "text", "label": "Email id", "name": "email", "placeholder": "Your email id" },
         { "type": "text", "label": "Website URL", "name": "websiteurl", "placeholder": "Your shop website URL", },
-        { "type": "text", "label": "Phone/Landline-1", "name": "phone/landline-1", "placeholder": "Phone/Landline-1" },
-        { "type": "text", "label": "Phone/Landline-2", "name": "phone/landline-2", "placeholder": "Phone/Landline-2" },
-        { "type": "text", "label": "Phone/Landline-3", "name": "phone/landline-3", "placeholder": "Phone/Landline-3" },
+        { "type": "text", "label": "Phone/Landline-1", "name": "phone_1", "placeholder": "Phone/Landline-1" },
+        { "type": "text", "label": "Phone/Landline-2", "name": "phone_2", "placeholder": "Phone/Landline-2" },
+        { "type": "text", "label": "Phone/Landline-3", "name": "phone_3", "placeholder": "Phone/Landline-3" },
         { "type": "text", "label": "Whatsapp Number", "name": "whatsappnumber", "placeholder": "Your Whatsapp Number" },
+
         { "type": "textarea", "label": "Address line 1", "name": "addressline1", "placeholder": "Your shop address line 1" },
         { "type": "textarea", "label": "Address line 2", "name": "addressline2", "placeholder": "Your shop address line 2" },
         { "type": "select", "label": "Area", "name": "area", "placeholder": "Select an Option", "options": ["Saravanampatti", "Thudiyalur", "Peelamedu", "Gandhipuram", "Singanallur"] },
-        { "type": "select", "label": "City/Town", "name": "city/town", "placeholder": "Select an Option", "options": ["Coimbatore", "Trichy", "Chennai", "Madurai", "Tanjore", "Erode"] },
+        { "type": "select", "label": "City/Town", "name": "city", "placeholder": "Select an Option", "options": ["Coimbatore", "Trichy", "Chennai", "Madurai", "Tanjore", "Erode"] },
         { "type": "select", "label": "State", "name": "state", "placeholder": "Select an Option", "options": ["Tamil nadu",] },
         { "type": "select", "label": "Country", "name": "country", "placeholder": "Select an Option", "options": ["India",] },
         { "type": "text", "label": "Zip Code", "name": "zipcode", "placeholder": "Your zip code" },
-        { "type": "textarea", "label": "About Your Shop/Business", "name": "aboutyourshop/business", "placeholder": "About your shop/business" },
+        
+        { "type": "map", "label": "Choose the location in map" },
+        { "type": "shop_timing", "label": "Shop Timing" },
+       
+        { "type": "textarea", "label": "About Your Shop/Business", "name": "description", "placeholder": "About your shop/business" },
         { "type": "file", "label": "Feature Image", "name": "featureimage", "placeholder": "Select a feature image", "maxFileSize": 9, "maxFiles": 1, },
         { "type": "file", "label": "Gallery Images", "name": "galleryimages", "placeholder": "Select gallery images", "maxFileSize": 9, "maxFiles": 10, },
         { "type": "file", "label": "Catalogue Image", "name": "catalogueimage", "placeholder": "Select a catalogue image", "maxFileSize": 9, "maxFiles": 1, },
@@ -29,6 +35,7 @@ export const addShop = {
     },
     {
       "title": "Seller Informations",
+      "section_fields_title":"sellerInfo",
       "fields": [
         {
           "type": "text",
@@ -54,6 +61,7 @@ export const addShop = {
     },
     {
       "title": "Additional Informations",
+      "section_fields_title":"additionalInfo",
       "fields": [
         {
           "type": "radio",
@@ -87,6 +95,7 @@ export const addShop = {
     },
     {
       "title": "Social Media Links",
+      "section_fields_title":"social_media_links",
       "fields": [
         {
           "type": "Social-icon",

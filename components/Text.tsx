@@ -6,17 +6,19 @@ interface TextProps {
   className?: string;
   placeholder: string;
   value: string;
+  name: string;
   onChange: (value: string) => void;
 }
 
-const Text: React.FC<TextProps> = ({ className, placeholder, value, onChange }) => {
+const Text: React.FC<TextProps> = ({ name, className, placeholder, value, onChange }) => {
   return (
     <input
       type="text"
+      name={name}
       className={className}
       placeholder={placeholder}
       value={value}
-      onChange={(e) => onChange(e.target.value)}
+      onChange={(e) => onChange(name, e.target.value)}
     />
   );
 };

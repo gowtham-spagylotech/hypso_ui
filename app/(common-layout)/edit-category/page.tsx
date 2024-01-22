@@ -17,6 +17,7 @@ import * as fieldTypes from "@/public/data/fieldTypes";
 import { editCategory } from "@/public/data/editCategory";
 import Link from "next/link";
 
+
 const {
   fieldTypeSelect,
   fieldTypeText,
@@ -68,7 +69,7 @@ const Page = () => {
 
           {editCategory.sections.map((section, index) => (
 
-            <div key={index} className="bg-white p-4 sm:p-6 md:p-10 mb-5 sm:mb-8 md:mb-12 rounded-2xl">
+            <div key={index} className="bg-white p-4 sm:p-6 md:p-10 mb-5 sm:mb-8 md:mb-12 rounded-2xl ">
 
               <Accordion
                 buttonContent={(open) => (

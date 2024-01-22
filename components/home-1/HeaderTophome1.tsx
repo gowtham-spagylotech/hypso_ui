@@ -101,20 +101,22 @@ const HeaderTop = () => {
 
   return (
     <>
-      <Image
-        className="absolute hidden xl:block top-0 left-0 z-10"
+      {/* <Image
+        className="absolute hidden xl:block top-0 left-0 z-10 "
         width={131}
         height={454}
-        src="/img/primary-hero-el-1.png"
+        // src="/img/primary-hero-el-1.png"
+        src=""
         alt="image"
       />
       <Image
         className="absolute hidden xl:block top-0 right-0 z-10"
         width={251}
         height={151}
-        src="/img/primary-hero-el-2.png"
+        // src="/img/primary-hero-el-2.png"
+        src=""
         alt="image"
-      />
+      /> */}
       <div className="bg-[var(--bg-1)] boder-b-2 border-[var(--border)] header-fix">
         <div className="container mx-auto flex justify-between py-3 lg:py-5 gap-1">
           <Image

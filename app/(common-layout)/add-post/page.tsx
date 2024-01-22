@@ -25,12 +25,16 @@ const {
 const Page = () => {
   const [fieldValues, setFieldValues] = useState({});
 
+  
+
   const handleFieldChange = (name, value) => {
-    setFieldValues((prevFieldValues) => ({
-      ...prevFieldValues,
-      [name]: value,
-    }));
+      setFieldValues((prevFieldValues) => ({
+        ...prevFieldValues,
+        [name]: value,
+      }));
   };
+
+  
 
   const handleCreateRequirement = () => {
     console.log("Button clicked");

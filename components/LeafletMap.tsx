@@ -1,26 +1,70 @@
-"use client";
+import React, { useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-const icon = L.icon({ iconUrl: "/img/marker-icon.png" });
 
-const LeafletMap = () => {
+interface LeafletMapProps {}
+
+const LeafletMap: React.FC<LeafletMapProps> = () => {
+  // Retrieve initial location from localStorage
+  const initialLocation: [number, number] =
+    JSON.parse(localStorage.getItem("clientLocation")) || [11.0706797, 76.9988557];
+  const [clientLocation, setClientLocation] = useState<[number, number]>(initialLocation);
+  const [manualLocation, setManualLocation] = useState<string>("");
+
+  useEffect(() => {
+    // Save the location to localStorage whenever it changes
+    localStorage.setItem("clientLocation", JSON.stringify(clientLocation));
+  }, [clientLocation]);
+
+  const handleManualLocationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setManualLocation(event.target.value);
+  };
+
+  const handleSetLocation = () => {
+    const [latitude, longitude] = manualLocation
+      .split(",")
+      .map((coord) => parseFloat(coord.trim()));
+    if (!isNaN(latitude) && !isNaN(longitude)) {
+      setClientLocation([latitude, longitude]);
+    }
+  };
+
   return (
-    <MapContainer
-      center={[51.505, -0.09]}
-      zoom={13}
-      scrollWheelZoom={false}
-      style={{ height: "50vh" }}>
-      <TileLayer
-        attribution='&copy; <Link href="https://www.openstreetmap.org/copyright">OpenStreetMap</Link> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <Marker icon={icon} position={[51.505, -0.09]}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
-      </Marker>
-    </MapContainer>
+    <div>
+      {/* <div>
+        <label htmlFor="manualLocation">Enter Manual Location (Latitude, Longitude):</label>
+        <input
+          type="text"
+          id="manualLocation"
+          value={manualLocation}
+          onChange={handleManualLocationChange}
+        />
+        <button onClick={handleSetLocation}>Set Location</button>
+      </div> */}
+      <MapContainer
+        center={clientLocation}
+        zoom={10}
+        scrollWheelZoom={false}
+        style={{ height: "50vh" }}
+      >
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        {clientLocation && (
+          <Marker icon={L.icon({ iconUrl: "/img/marker-icon.png" })} position={clientLocation}>
+            <Popup>
+              A pretty CSS3 popup. <br /> Easily customizable.
+            </Popup>
+          </Marker>
+        )}
+        {/* Display coordinates in a popup when clicking on the map */}
+        {clientLocation && (
+          <Popup position={clientLocation}>
+            Latitude: {clientLocation[0]} <br />
+            Longitude: {clientLocation[1]}
+          </Popup>
+        )}
+      </MapContainer>
+    </div>
   );
 };
 
