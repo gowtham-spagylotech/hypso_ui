@@ -3,6 +3,7 @@ import React from "react";
 import * as classNames from "@/public/data/classNames";
 
 interface SocialIconProps {
+  name: string;
   className?: string;
   iconName: string;
   placeholder: string;
@@ -10,7 +11,7 @@ interface SocialIconProps {
   onChange: (value: string) => void;
 }
 
-const SocialIcon: React.FC<SocialIconProps> = ({ className, iconName, placeholder, value, onChange }) => {
+const SocialIcon: React.FC<SocialIconProps> = ({ name, className, iconName, placeholder, value, onChange }) => {
   
   return (
     <div className="w-full">
@@ -18,6 +19,7 @@ const SocialIcon: React.FC<SocialIconProps> = ({ className, iconName, placeholde
         className={`${className} mt-6 mb-4 text-4xl font-medium`}
       ></i>
       <input
+       name= {name}
         type="text"
         className="w-full border p-2 focus:outline-none rounded-md text-base"
         placeholder={placeholder}

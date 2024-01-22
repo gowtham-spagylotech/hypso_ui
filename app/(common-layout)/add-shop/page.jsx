@@ -15,7 +15,7 @@ import LabelPTag from "@/components/LabelPTag";
 import File from "@/components/File";
 import SocialIcon from "@/components/SocialIcon";
 import BtnCreate from "@/components/BtnCreate";
-// import LeafletMap from "../../../components/LeafletMap";
+import LeafletMap from "../../../components/LeafletMap";
 import { useRouter } from 'next/navigation'
 import {
   ChevronDownIcon,
@@ -152,27 +152,28 @@ const Page = () => {
   }
 
   const allSectionFieldsTitles = getAllSectionFieldsTitles();
+  // console.log("allSectionFieldsTitles",allSectionFieldsTitles)
 
   const handleFieldChange = (name, value) => {
-    if (sectionFieldsTitle == allSectionFieldsTitles?.[0]) {
+    if (findSectionFieldsTitle(name) == allSectionFieldsTitles?.[0]) {
       setShopInfo((prevFieldValues) => ({
         ...prevFieldValues,
         [name]: value,
       }));
     }
-    if (sectionFieldsTitle == allSectionFieldsTitles?.[1]) {
+    if (findSectionFieldsTitle(name) == allSectionFieldsTitles?.[1]) {
       setSellerInfo((prevFieldValues) => ({
         ...prevFieldValues,
         [name]: value,
       }));
     }
-    if (sectionFieldsTitle == allSectionFieldsTitles?.[2]) {
+    if (findSectionFieldsTitle(name) == allSectionFieldsTitles?.[2]) {
       setAdditionalInfo((prevFieldValues) => ({
         ...prevFieldValues,
         [name]: value,
       }));
     }
-    if (sectionFieldsTitle == allSectionFieldsTitles?.[3]) {
+    if (findSectionFieldsTitle(name) == allSectionFieldsTitles?.[3]) {
       setSocialMediaLinks((prevFieldValues) => ({
         ...prevFieldValues,
         [name]: value,
@@ -183,7 +184,7 @@ const Page = () => {
   function findSectionFieldsTitle(fieldName) {
     for (const section of addShop?.sections) {
       for (const field of section.fields) {
-        if (field.name === fieldName) {
+        if (field.name == fieldName) {
           return section.section_fields_title;
         }
       }
@@ -192,9 +193,17 @@ const Page = () => {
   }
 
   function findSectionFieldsValue(fieldName) {
-    var section_fields_title = findSectionFieldsTitle(fieldName)
-    if (section_fields_title = allSectionFieldsTitles[0]) {
+    if (findSectionFieldsTitle(fieldName) == allSectionFieldsTitles?.[0]) {
+      return shopInfo
+    }
+    if (findSectionFieldsTitle(fieldName) == allSectionFieldsTitles?.[1]) {
       return sellerInfo
+    }
+    if (findSectionFieldsTitle(fieldName) == allSectionFieldsTitles?.[2]) {
+      return additionalInfo
+    }
+    if (findSectionFieldsTitle(fieldName) == allSectionFieldsTitles?.[3]) {
+      return socialMediaLinks
     }
   }
 
@@ -218,6 +227,7 @@ const Page = () => {
 
   const renderFormField = (field) => {
     var field_values = findSectionFieldsValue(field?.name)
+   console.log('field_values',field_values)
     switch (field.type) {
       case fieldTypeSelect:
         return (
@@ -236,20 +246,23 @@ const Page = () => {
           </div>
         );
 
-      case fieldTypeRadio:
-        return (
-          <Radio
-            className={""}
-            label={field.label}
-            options={field.options}
-            onChange={(value) => handleFieldChange(field.name, value)}
-          />
-        );
+        case fieldTypeRadio:
+          return (
+            <Radio
+              name={field.name}
+              className={''}
+              label={field.label}
+              options={field.options}
+              onChange={(value) => handleFieldChange(field.name, value)}
+            />
+          );
+  
 
       case fieldTypeSocialIcon:
         return (
           <SocialIcon
             className={field.className}
+            name={field.name}
             iconName={field.iconName}
             placeholder={field.placeholder}
             value={field_values?.[field.name] || ""}
@@ -264,8 +277,9 @@ const Page = () => {
             <Text
               className={classNames.textInput}
               placeholder={field.placeholder}
+              name={field.name}
               value={field_values?.[field.name] || ""}
-              onChange={(value) => handleFieldChange(field.name, value)}
+              onChange={handleFieldChange}
             />
           </div>
         );
@@ -279,21 +293,20 @@ const Page = () => {
             />
             <Textarea
               className={classNames.textareaInput}
+              name={field.name}
               placeholder={field.placeholder}
               value={field_values?.[field.name] || ""}
-              onChange={(value) => handleFieldChange(field.name, value)}
+              onChange={handleFieldChange}
             />
           </div>
         );
 
-      case fieldTypeDate:
+        case fieldTypeDate:
         return (
           <div className={classNames.formFieldWrapper}>
-            <LabelPTag
-              className={classNames.formFieldLabel}
-              label={field.label}
-            />
+            <LabelPTag className={classNames.formFieldLabel} label={field.label} />
             <Date
+              name={field.name}
               className={classNames.dateInput}
               placeholder={field.placeholder}
               value={field_values?.[field.name] || ""}
@@ -303,27 +316,27 @@ const Page = () => {
         );
 
       case fieldTypeFile:
-        return (
-          <div className={classNames.formFieldWrapper}>
-            <File
-              className={classNames.fileInputWrapper}
-              label={field.label}
-              onChange={(e) => handleFileChange(field.name, e)}
-            />
-            <p className="mt-6">
-              File:{" "}
-              {fieldValues[field.name]
-                ? fieldValues[field.name].name
-                : "No file selected"}
-            </p>
-          </div>
-        );
-      case field.type == "map":
-        return (
-          <div >
-            <LeafletMap />
-          </div>
-        );
+        // return (
+        //   <div className={classNames.formFieldWrapper}>
+        //     <File
+        //       className={classNames.fileInputWrapper}
+        //       label={field.label}
+        //       onChange={(e) => handleFileChange(field.name, e)}
+        //     />
+        //     <p className="mt-6">
+        //       File:{" "}
+        //       {fieldValues[field.name]
+        //         ? fieldValues[field.name].name
+        //         : "No file selected"}
+        //     </p>
+        //   </div>
+        // );
+      // case field.type == "map":
+      //   return (
+      //     <div >
+      //       <LeafletMap />
+      //     </div>
+      //   );
 
       default:
         return null;
@@ -343,60 +356,60 @@ const Page = () => {
 
   const handleCreateShop = () => {
     router.push(`Edit-Shop/${1}`)
-    // var payload = {
-    //   category_id: 1,
-    //   sub_category_id: [1, 2, 3],
-    //   name: shopInfo?.name,
-    //   shop_type: shopInfo?.type,
-    //   email: shopInfo?.email,
-    //   description: shopInfo?.description,
-    //   featured_image: 1,
-    //   catalogue: 2,
-    //   images: [{ images: [1, 2, 3] }],
-    //   phone_1: shopInfo?.phone_1,
-    //   phone_2: shopInfo?.phone_2,
-    //   phone_3: shopInfo?.phone_3,
-    //   whatsapp_number: shopInfo?.whatsappnumber,
-    //   address: {
-    //     line_1: shopInfo?.addressline1,
-    //     line_2: shopInfo?.addressline2,
-    //     area: shopInfo?.area,
-    //     city: shopInfo?.city,
-    //     state: shopInfo?.state,
-    //     zip: shopInfo?.zipcode,
-    //     country: shopInfo?.country,
-    //   },
-    //   latitude: 11.0794473,
-    //   longitude: 77.0060358,
-    //   shop_timings: [{ "Mon-Sun": "7:30 am - 10:00 pm" }],
-    //   seller_info: [sellerInfo],
-    //   additional_info: [additionalInfo],
-    //   social_media: [socialMediaLinks],
-    //   entity_type: "SHOP_RETAIL",
-    //   created_by: 1,
-    //   is_active: true,
+    var payload = {
+      category_id: 1,
+      sub_category_id: [1, 2, 3],
+      name: shopInfo?.name,
+      shop_type: shopInfo?.type,
+      email: shopInfo?.email,
+      description: shopInfo?.description,
+      featured_image: 1,
+      catalogue: 2,
+      images: [{ images: [1, 2, 3] }],
+      phone_1: shopInfo?.phone_1,
+      phone_2: shopInfo?.phone_2,
+      phone_3: shopInfo?.phone_3,
+      whatsapp_number: shopInfo?.whatsappnumber,
+      address: {
+        line_1: shopInfo?.addressline1,
+        line_2: shopInfo?.addressline2,
+        area: shopInfo?.area,
+        city: shopInfo?.city,
+        state: shopInfo?.state,
+        zip: shopInfo?.zipcode,
+        country: shopInfo?.country,
+      },
+      latitude: 11.0794473,
+      longitude: 77.0060358,
+      shop_timings: [{ "Mon-Sun": "7:30 am - 10:00 pm" }],
+      seller_info: [sellerInfo],
+      additional_info: [additionalInfo],
+      social_media: [socialMediaLinks],
+      entity_type: "SHOP_RETAIL",
+      created_by: 1,
+      is_active: true,
 
-    // }
+    }
 
-    // console.log("payload", payload)
-    // fetch(`${apiUrl}/modules/shops/create`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     // Add any other headers as needed
-    //   },
-    //   body: JSON.stringify(payload),
-    // })
-    //   .then((response) => response.json())
-    //   .then((postDataResult) => {
-    //     console.log("Result of the POST request:", postDataResult);
-    //     // You can perform further actions with postDataResult if needed
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error in handleCreateShop:", error);
-    //     // Handle the error if needed
-    //     throw error; // Rethrow the error to handle it elsewhere if needed
-    //   });
+    console.log("payload", payload)
+    fetch(`${apiUrl}/modules/shops/create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // Add any other headers as needed
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((response) => response.json())
+      .then((postDataResult) => {
+        console.log("Result of the POST request:", postDataResult);
+        // You can perform further actions with postDataResult if needed
+      })
+      .catch((error) => {
+        console.error("Error in handleCreateShop:", error);
+        // Handle the error if needed
+        throw error; // Rethrow the error to handle it elsewhere if needed
+      });
   };
 
   return (

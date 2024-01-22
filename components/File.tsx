@@ -7,6 +7,7 @@ import {
 import * as classNames from "@/public/data/classNames"; // Assuming you have a file for classNames
 
 interface FileInputProps {
+  name: string;
   className?: string;
   label: string;
   name: string;
@@ -30,7 +31,7 @@ const FileInput: React.FC<FileInputProps> = ({ name,className, label, onChange }
 
   return (
     <div className={className}>
-      <p className={classNames.formFieldLabel}>{label} :</p>
+      <p  className={classNames.formFieldLabel}>{label} :</p>
       <div className={classNames.fileInputContainer}>
         <label
           htmlFor={`dropzone-file-${label}`}

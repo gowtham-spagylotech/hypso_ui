@@ -3,10 +3,10 @@ import React from "react";
 import { useState } from "react";
 
 interface TextProps {
+  name: string;
   className?: string;
   placeholder: string;
   value: string;
-  name: string;
   onChange: (value: string) => void;
 }
 

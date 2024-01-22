@@ -31,10 +31,12 @@ export default async function page() {
 
   return (
     <>
-      {postData.map((item) => (
+      {postData ? (
         
-        <FeaturedCardPropertyList item={item} key={item.id} />
-      ))}
+        <FeaturedCardPropertyList postData={postData} />
+        ) : (
+          <p>Error loading data</p>
+        )}
       <CardPagination />
     </>
   );

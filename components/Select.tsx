@@ -2,6 +2,7 @@
 import React from "react";
 
 interface SelectProps {
+  name: string;
   className?: string;
   options: string[];
   value: string;
@@ -9,9 +10,10 @@ interface SelectProps {
   placeholder?: string; // Add a placeholder prop
 }
 
-const Select: React.FC<SelectProps> = ({ className, options, value, onChange, placeholder }) => {
+const Select: React.FC<SelectProps> = ({ name, className, options, value, onChange, placeholder }) => {
   return (
     <select
+    name= {name}
       className={className}
       value={value}
       onChange={(e) => onChange(e.target.value)}

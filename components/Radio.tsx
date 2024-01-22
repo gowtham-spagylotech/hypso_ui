@@ -3,13 +3,14 @@ import React, { useState } from "react";
 import * as classNames from "@/public/data/classNames";
 
 interface RadioInputProps {
+    name: string;
     label: string;
     options: string[];
     className?: string;
     onChange: (value: string) => void;
 }
 
-const Radio: React.FC<RadioInputProps> = ({ label, options, className, onChange }) => {
+const Radio: React.FC<RadioInputProps> = ({ name, label, options, className, onChange }) => {
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
     const handleOptionChange = (option: string) => {

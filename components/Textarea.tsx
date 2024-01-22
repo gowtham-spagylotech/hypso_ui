@@ -2,6 +2,7 @@
 import React from "react";
 
 interface TextareaProps {
+  name: string;
   className?: string;
   placeholder: string;
   value: string;
