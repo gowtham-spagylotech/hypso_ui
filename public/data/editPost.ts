@@ -1,4 +1,4 @@
-export const addPost = {
+export const editPost = {
     "sections": [
         {
             "title": "Create Post",

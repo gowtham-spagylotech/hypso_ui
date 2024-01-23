@@ -17,8 +17,11 @@ import File from "@/components/File";
 import LabelPTag from "@/components/LabelPTag";
 import BtnCreate from "@/components/BtnCreate";
 import * as fieldTypes from "@/public/data/fieldTypes";
-import { addCategory } from "@/public/data/addCategory";
-import { useRouter } from 'next/navigation';
+import { editCategory } from "@/public/data/editCategory";
+import { addIcon } from "@/public/data/icons";
+import Link from "next/link";
+import BtnUpdate from "@/components/BtnUpdate";
+import { useRouter } from 'next/navigation'
 
 const {
   fieldTypeSelect,
@@ -28,10 +31,12 @@ const {
   fieldTypeFile,
 } = fieldTypes;
 
-const Page = () => {
+const Page = ({params,searchParams}: { params: { slug: string },searchParams?: { [key: string]: string | string[] | undefined }}) => {
 
-  const [createCategoryJSON, setCreateCategoryJson] = useState([])
-  const [createCategoryValues, setCreateCategoryValues] = useState({});
+  const { id } = params;
+  const [updateCategoryJSON, setUpdateCategoryJSON] = useState([])
+  const [updateCategoryValues, setUpdateCategoryValues] = useState({});
+  const [modifiedCategoryValues,setModifiedCategoryValues] = useState({})
   const [categoryList, setCategoryList] = useState([]);
   const [config, setConfig] = useState();
   const [close, setClose] = useState(true)
@@ -40,6 +45,9 @@ const Page = () => {
   const [selectedImages, setSelectedImages] = useState();
   const [selectedProducts, setSelectedProducts] = useState([]);
   const router = useRouter();
+  // const { id } = router.query;
+  // console.log("router.query",router.query)
+  // console.log("searchParams",searchParams)
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   useEffect(() => {
@@ -62,42 +70,73 @@ const Page = () => {
       });
 
     // json
-    if (createCategoryJSON?.length == 0)
-      setCreateCategoryJson(addCategory?.sections)
+    if (updateCategoryJSON?.length == 0)
+      setUpdateCategoryJSON(editCategory?.sections)
   }, [])
 
   useEffect(() => {
-    // console.log("createCategoryValues:", createCategoryValues);
+    // api call
+    fetch(`${apiUrl}/modules/categories/get-category/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // Add any other headers as needed
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+      //  console.log("response",response)
+       setUpdateCategoryValues(response?.record)
+      })
+      .catch((error) => {
+        console.error("Error in handleCreateShop:", error);
+        // Handle the error if needed
+        throw error; // Rethrow the error to handle it elsewhere if needed
+      });
+
+    // json
+    if (updateCategoryJSON?.length == 0)
+      setUpdateCategoryJSON(editCategory?.sections)
+  }, [])
+
+
+  useEffect(() => {
+    // console.log("updateCategoryValues:", updateCategoryValues);
     // console.log("newParentCategory", newParentCategory)
-    console.log("createCategoryJSON",createCategoryJSON)
+    // console.log("updateCategoryJSON",updateCategoryJSON)
     // console.log("categoryList", categoryList)
-  }, [createCategoryValues, categoryList, newParentCategory, createCategoryJSON]);
+    console.log("modifiedCategoryValues",modifiedCategoryValues)
+  }, [updateCategoryValues, categoryList, newParentCategory, updateCategoryJSON,modifiedCategoryValues]);
 
   // Function to handle form field changes
   const handleFormFieldChange = (fieldName, value) => {
     // Update the state with the new form field value
-    setCreateCategoryValues((prevValues) => ({ ...prevValues, [fieldName]: value, }));
+    setUpdateCategoryValues((prevValues) => ({ ...prevValues, [fieldName]: value, }));
+    setModifiedCategoryValues((prevValues) => ({ ...prevValues, [fieldName]: value, }))
   };
 
   function getCategoryNameById(categoryId) {
-    setCreateCategoryValues((prevValues) => ({ ...prevValues, "category_id": categoryId, }));
+    setUpdateCategoryValues((prevValues) => ({ ...prevValues, "category_id": categoryId, }));
+    setModifiedCategoryValues((prevValues) => ({ ...prevValues, "category_id": categoryId, }));
     setClose(true)
     const category = categoryList?.find(category => category?.category_id == categoryId);
     return category ? category.name : null;
   }
 
-  const createCategory = () => {
-    fetch(`${apiUrl}/modules/categories/create`, {
+  const updateCategory = () => {
+    console.log("updated")
+    fetch(`${apiUrl}/modules/categories/update`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         // Add any other headers as needed
       },
       body: JSON.stringify({
-        "name": createCategoryValues?.child_category,
-        "description": createCategoryValues?.description,
+        "category_id":id,
+        "name": modifiedCategoryValues?.child_category,
+        "description": modifiedCategoryValues?.description,
         "featured_image": 1,
-        "parent_category_id": createCategoryValues?.parent_category_id,
+        "parent_category_id": modifiedCategoryValues?.parent_category_id,
         "entity_type": "ENT_LISTING",
         "is_active": true,
         "custom_field_settings": []
@@ -106,8 +145,6 @@ const Page = () => {
       .then((response) => response.json())
       .then((response) => {
         console.log("response", response);
-        router.push(`edit-category/${response.category_id}`)
-
       })
       .catch((error) => {
         console.error("Error in handleCreateShop:", error);
@@ -143,12 +180,12 @@ const Page = () => {
     <div className="py-[30px] lg:py-[60px] bg-[var(--bg-2)] px-3">
       <div className="container">
         <div className="w-full xl:w-[83.33%] xxl:w-[100%] mx-auto">
-          {createCategoryJSON?.map((section, index) => (
+          {updateCategoryJSON?.map((section, index) => (
             <div key={index} className="bg-white p-4 sm:p-6 md:p-10 mb-5 sm:mb-8 md:mb-12 rounded-2xl">
               <div className="flex w-100 items-center justify-between">
-                <p className="text-xl font-bold">Create Category</p>
+                <p className="text-xl font-bold">Edit Category</p>
                 <div>
-                  <BtnCreate onClick={()=>createCategory()}/>
+                  <BtnUpdate onClick={()=>updateCategory()}/>
                 </div>
               </div>
               <div className="pt-4">
@@ -169,7 +206,7 @@ const Page = () => {
                                 {field.parent && newParentCategory ? <Text className={classNames.textInput} placeholder={field.placeholder} name={field.name} onChange={handleFormFieldChange} /> : ""}
                                 <div className={`${newParentCategory ? "hidden" : "block"}`}>
                                   <div className="relative">
-                                    <input type="text" className="w-full border p-2 focus:outline-none rounded-md text-base cursor-pointer" placeholder="Select Category" value={categoryList?.find(category => category?.category_id == createCategoryValues?.category_id)?.name} onClick={() => setClose(false)}></input>
+                                    <input type="text" className="w-full border p-2 focus:outline-none rounded-md text-base cursor-pointer" placeholder="Select Category" value={categoryList?.find(category => category?.category_id == updateCategoryValues?.parent_category_id)?.name} onClick={() => setClose(false)}></input>
                                     <svg width="25px" height="25px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="absolute bottom-[8px] right-[10px]">
                                       <g>
                                         <path fill="none" d="M0 0h24v24H0z" />
@@ -200,7 +237,7 @@ const Page = () => {
                               :
                               <>
                                 <p className={classNames.formFieldLabel}>{field.label} :</p>
-                                <Text className={classNames.textInput} placeholder={field.placeholder} name={field.name} onChange={handleFormFieldChange} />
+                                <Text className={classNames.textInput} placeholder={field.placeholder} value={updateCategoryValues?.name} name={field.name} onChange={handleFormFieldChange} />
                                 {/* <div className="absolute right-0 bottom-[-25px]	cursor-pointer">
                                   <svg width="20px" height="20px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="cursor-pointer">
                                     <title>plus-circle</title>
@@ -225,6 +262,7 @@ const Page = () => {
                               name={field.name}
                               className={classNames.textareaInput}
                               placeholder={field.placeholder}
+                              value={updateCategoryValues?.description}
                               rows={10}
                               cols={200}
                               onChange={handleFormFieldChange}
@@ -250,7 +288,7 @@ const Page = () => {
                   </div>
                 </div>
               </div>
-              <BtnCreate onClick={()=>createCategory()}/>
+              <BtnUpdate onClick={()=>updateCategory()}/>
             </div>
           ))}
 

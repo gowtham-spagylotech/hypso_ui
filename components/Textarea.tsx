@@ -21,7 +21,7 @@ const Textarea: React.FC<TextareaProps> = ({ name,rows=8,cols=100,className, pla
     className={className}
     placeholder={placeholder}
     value={value}
-    onChange={(e) => onChange(name, e.target.value)}
+   onChange={(e)  => onChange(name, e.target.value)}
   ></textarea>
   );
 };
