@@ -4,7 +4,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 // import Pagination from "../../Components/Global/Pagination/Pagination";
 // import Alert from "../../Components/Alert/Alert";
 // import Loader from "../Global/Loader/Loader";
-import './ImageSelector.css';
+// import './ImageSelector.css';
 
 const ImageSelector = ({ Config, onClose, onSelectImageInfo }) => {
 
@@ -62,49 +62,91 @@ const ImageSelector = ({ Config, onClose, onSelectImageInfo }) => {
     }, [Config])
 
     //on-page, load get data from the database
+    // useEffect(() => {
+
+    //     var initial_payload = {
+    //         // "store_id": store_id,
+    //         "area_id":1,
+    //         // "page_size": 10,
+    //         // "current_page": currentPage
+    //     }
+
+    //     var updated_payload = payLoad ? payLoad : initial_payload
+    //     // console.log("updated_payload", updated_payload)
+    //     // console.log("initial_payload",initial_payload)
+
+    //     fetch(`${apiUrl}/modules/images/list`,
+    //         {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Accept': 'application/json',
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify(initial_payload)
+    //         },)
+
+    //         .then(data => {
+    //             console.log("api response " + JSON.stringify(data))
+    //             if (data?.success == true) {
+    //                 setImages(data?.records)
+    //                 setProgress({ started: false, pc: 0 })
+    //                 setMessage("")
+    //                 setResultInfo({
+    //                     total_rows: data.total_rows,
+    //                     fetched_rows: data.fetched_rows,
+    //                     total_pages: data.total_pages,
+    //                     page_size: data.page_size,
+    //                     current_page: data.current_page,
+    //                     success: data.success,
+    //                     errors: data.errors
+    //                 })
+
+    //             } else {
+    //                 // console.log("errors" + JSON.stringify(data?.errors))
+    //             }
+    //         })
+
+    // }, [payLoad, currentPage, refreshCount, Config])
+
+   
+
     useEffect(() => {
+        fetchData();
+    }, [payLoad, currentPage, refreshCount, Config]);
 
-        var initial_payload = {
-            // "store_id": store_id,
-            "page_size": 10,
-            "current_page": currentPage
+
+    const fetchData = async () => {
+        try {
+            const response = await fetch(`${apiUrl}/modules/images/list`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ "area_id": 1 })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setImages(data?.records)
+                    setProgress({ started: false, pc: 0 })
+                    setMessage("")
+                    setResultInfo({
+                        total_rows: data.total_rows,
+                        fetched_rows: data.fetched_rows,
+                        total_pages: data.total_pages,
+                        page_size: data.page_size,
+                        current_page: data.current_page,
+                        success: data.success,
+                        errors: data.errors
+                    })
+            } else {
+                console.error(`HTTP error! Status: ${response.status}`);
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error.message);
         }
-
-        var updated_payload = payLoad ? payLoad : initial_payload
-        // console.log("updated_payload", updated_payload)
-        // callAPI('/admin/images/list',
-        //     {
-        //         method: 'POST',
-        //         headers: {
-        //             'Accept': 'application/json',
-        //             'Content-Type': 'application/json',
-        //             'token': user?.auth_token
-        //         },
-        //         body: JSON.stringify(updated_payload)
-        //     }, navigate, setLoading)
-
-        //     .then(data => {
-        //         // console.log("api response " + JSON.stringify(data))
-        //         if (data?.success == true) {
-        //             setImages(data?.records)
-        //             setProgress({ started: false, pc: 0 })
-        //             setMessage("")
-        //             setResultInfo({
-        //                 total_rows: data.total_rows,
-        //                 fetched_rows: data.fetched_rows,
-        //                 total_pages: data.total_pages,
-        //                 page_size: data.page_size,
-        //                 current_page: data.current_page,
-        //                 success: data.success,
-        //                 errors: data.errors
-        //             })
-
-        //         } else {
-        //             // console.log("errors" + JSON.stringify(data?.errors))
-        //         }
-        //     })
-
-    }, [payLoad, currentPage, refreshCount, Config])
+    };
 
     const onPageSelect = (currentPage) => {
         setCurrentPage(currentPage)
@@ -154,7 +196,7 @@ const ImageSelector = ({ Config, onClose, onSelectImageInfo }) => {
         if (image) {
             var formData = new FormData()
             formData.append('file', image)
-            formData.append('area_id', 6)
+            formData.append('area_id', 1)
             setMessage("Uploading...");
             setProgress({ started: true, pc: progressPercentage })
             console.log("formData - " + JSON.stringify(formData))
@@ -164,7 +206,7 @@ const ImageSelector = ({ Config, onClose, onSelectImageInfo }) => {
 
             },)
                 .then(data => {
-                    // console.log("upload image - received data " + JSON.stringify(data))
+                    console.log("upload image - received data " + JSON.stringify(data))
                     if (data.success) {
                         // Calculate the percentage increase
                         setCount(count + 1)

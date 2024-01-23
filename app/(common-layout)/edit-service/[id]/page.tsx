@@ -12,8 +12,6 @@ import LabelPTag from "@/components/LabelPTag";
 import BtnUpdate from "@/components/BtnUpdate";
 import * as fieldTypes from "@/public/data/fieldTypes";
 import { editPost } from "@/public/data/editPost";
-import ImageSelector from "@/components/ImageSelector/ImageSelector"
-import ImagesPreview from "@/components/ImagesPreview/ImagesPreview"
 
 const {
     fieldTypeSelect,
@@ -28,18 +26,12 @@ const Page = ({ params, searchParams }: { params: { slug: string }, searchParams
     const { id } = params;
     const [fieldValues, setFieldValues] = useState({});
     const [modifiedValues, setModifiedValues] = useState({});
-    const [config, setConfig] = useState();
-    const [close, setClose] = useState(true)
-    const [newParentCategory, setNewParentCategory] = useState(false)
-    const [categoryFeatureImage, setCategoryFeatureImage] = useState([]);
-    const [selectedImages, setSelectedImages] = useState();
-    const [selectedProducts, setSelectedProducts] = useState([]);
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
+   
 
     useEffect(() => {
         // api call
-        fetch(`${apiUrl}/modules/posts/get-post/${id}`, {
+        fetch(`${apiUrl}/modules/services/get-service/${id}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -61,15 +53,15 @@ const Page = ({ params, searchParams }: { params: { slug: string }, searchParams
     }, [])
 
     const handleCreateRequirement = () => {
-        console.log("modifiedValues", modifiedValues)
-        fetch(`${apiUrl}/modules/posts/update`, {
+        console.log("modifiedValues",modifiedValues)
+        fetch(`${apiUrl}/modules/services/update`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 // Add any other headers as needed
             },
             body: JSON.stringify({
-                "post_id": 8,
+                "service_id": id,
                 // "category_id": 1,
                 "name": modifiedValues?.name,
                 "description": modifiedValues?.description,
@@ -97,7 +89,7 @@ const Page = ({ params, searchParams }: { params: { slug: string }, searchParams
     const handleFieldChange = (name, value) => {
         setFieldValues((prevFieldValues) => ({ ...prevFieldValues, [name]: value }));
         setModifiedValues((prevFieldValues) => ({ ...prevFieldValues, [name]: value }));
-
+        
     };
 
     // const handleFieldChange = (name, value) => {
@@ -107,26 +99,9 @@ const Page = ({ params, searchParams }: { params: { slug: string }, searchParams
     //     }));
     // };
 
-    useEffect(() => {
-        console.log("modifiedValues", modifiedValues)
-    }, [modifiedValues])
-
-    const onOpen = (config) => {
-        setConfig(config)
-    }
-
-    const onClose = () => {
-        setConfig(false)
-    }
-
-    const onSelectImages = (images) => {
-        setSelectedImages(images)
-    }
-
-    const onRemoveImageIds = () => {
-        setSelectedImages(null)
-    }
-
+    useEffect(()=>{
+        console.log("modifiedValues",modifiedValues)
+    },[modifiedValues])
 
     return (
         <div className="py-[30px] lg:py-[60px] bg-[var(--bg-2)] px-3">
@@ -138,7 +113,7 @@ const Page = ({ params, searchParams }: { params: { slug: string }, searchParams
                             <div className="pt-4">
 
                                 <div className="flex w-100 items-center justify-between">
-                                    <p className="text-xl font-bold">Edit Post</p>
+                                    <p className="text-xl font-bold">Edit Service</p>
                                     <div>
                                         <BtnUpdate onClick={handleCreateRequirement} />
                                     </div>
@@ -204,29 +179,25 @@ const Page = ({ params, searchParams }: { params: { slug: string }, searchParams
                                     </div>
                                     <div className={`w-[49%] relative`}>
                                         <div className={classNames.formFieldWrapper}>
-                                            <ImagesPreview
-                                                acceptMultipleFiles={false}
-                                                featuredImage={true}
-                                                userProfile={false}
-                                                onOpen={onOpen}
-                                                selectedImageInfo={selectedImages}
-                                                onRemoveImageIds={onRemoveImageIds}
-                                                deleteDisable={true}
-                                                title={"feature image :"}
+                                            <File
+                                                className={classNames.fileInputWrapper}
+                                                label={"featureimage"}
+                                                onChange={(e) => handleFileChange(field.name, e)}
                                             />
+                                            <p className="mt-6">
+                                                {/* File: {fieldValues[field.name] ? fieldValues[field.name].name : "No file selected"} */}
+                                            </p>
                                         </div>
 
                                         <div className={classNames.formFieldWrapper}>
-                                            <ImagesPreview
-                                                acceptMultipleFiles={false}
-                                                featuredImage={true}
-                                                userProfile={false}
-                                                onOpen={onOpen}
-                                                selectedImageInfo={selectedImages}
-                                                onRemoveImageIds={onRemoveImageIds}
-                                                deleteDisable={true}
-                                                title={"Gallery image :"}
+                                            <File
+                                                className={classNames.fileInputWrapper}
+                                                label={"Gallery image"}
+                                                onChange={(e) => handleFileChange(field.name, e)}
                                             />
+                                            <p className="mt-6">
+                                                {/* File: {fieldValues[field.name] ? fieldValues[field.name].name : "No file selected"} */}
+                                            </p>
                                         </div>
 
                                     </div>
@@ -235,7 +206,6 @@ const Page = ({ params, searchParams }: { params: { slug: string }, searchParams
                             <BtnUpdate onClick={handleCreateRequirement} />
                         </div>
                     ))}
-                    <ImageSelector Config={config} onClose={onClose} onSelectImageInfo={onSelectImages} />
                 </div>
             </div>
         </div>

@@ -12,6 +12,7 @@ import LabelPTag from "@/components/LabelPTag";
 import BtnCreate from "@/components/BtnCreate";
 import * as fieldTypes from "@/public/data/fieldTypes";
 import { addPost } from "@/public/data/addPost";
+import { useRouter } from 'next/navigation';
 import ImageSelector from "@/components/ImageSelector/ImageSelector"
 import ImagesPreview from "@/components/ImagesPreview/ImagesPreview"
 
@@ -25,6 +26,14 @@ const {
 
 const Page = () => {
   const [fieldValues, setFieldValues] = useState({});
+  const [config, setConfig] = useState();
+  const [close, setClose] = useState(true)
+  const [newParentCategory, setNewParentCategory] = useState(false)
+  const [categoryFeatureImage, setCategoryFeatureImage] = useState([]);
+  const [selectedImages, setSelectedImages] = useState();
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const router = useRouter();
+  
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const handleFieldChange = (name, value) => {
     setFieldValues((prevFieldValues) => ({
@@ -41,15 +50,15 @@ const Page = () => {
         // Add any other headers as needed
       },
       body: JSON.stringify({
-          "category_id": 1,
-          "name":fieldValues?.name ,
-          "description": fieldValues?.description,
-          // "featured_image": 1,
-          // "images":[{"images": [1,2,3]}],
-          // "custom_field_data":[{"brand": "acer"}],
-          "entity_type": "ENT_LISTING",
-          "is_active": true
-            
+        "category_id": 1,
+        "name": fieldValues?.name,
+        "description": fieldValues?.description,
+        // "featured_image": 1,
+        // "images":[{"images": [1,2,3]}],
+        // "custom_field_data":[{"brand": "acer"}],
+        "entity_type": "ENT_LISTING",
+        "is_active": true
+
       })
     })
       .then((response) => response.json())
@@ -76,6 +85,22 @@ const Page = () => {
     }
   };
 
+  const onOpen = (config) => {
+    setConfig(config)
+  }
+
+  const onClose = () => {
+    setConfig(false)
+  }
+
+  const onSelectImages = (images) => {
+    setSelectedImages(images)
+  }
+
+  const onRemoveImageIds = () => {
+    setSelectedImages(null)
+  }
+
   return (
     <div className="py-[30px] lg:py-[60px] bg-[var(--bg-2)] px-3">
       <div className="container">
@@ -86,7 +111,7 @@ const Page = () => {
               <div className="pt-4">
 
                 <div className="flex w-100 items-center justify-between mb-2">
-                  <p className="text-xl font-bold">Create Post</p>
+                  <p className="text-xl font-bold">Add Post</p>
                   <div>
                     <BtnCreate onClick={handleUpdateRequirement} />
                   </div>
@@ -152,25 +177,29 @@ const Page = () => {
                   </div>
                   <div className={`w-[49%] relative`}>
                     <div className={classNames.formFieldWrapper}>
-                      <File
-                        className={classNames.fileInputWrapper}
-                        label={"featureimage"}
-                        onChange={(e) => handleFileChange(field.name, e)}
+                      <ImagesPreview
+                        acceptMultipleFiles={false}
+                        featuredImage={true}
+                        userProfile={false}
+                        onOpen={onOpen}
+                        selectedImageInfo={selectedImages}
+                        onRemoveImageIds={onRemoveImageIds}
+                        deleteDisable={true}
+                        title={"feature image :"}
                       />
-                      <p className="mt-6">
-                        {/* File: {fieldValues[field.name] ? fieldValues[field.name].name : "No file selected"} */}
-                      </p>
                     </div>
 
                     <div className={classNames.formFieldWrapper}>
-                      <File
-                        className={classNames.fileInputWrapper}
-                        label={"Gallery image"}
-                        onChange={(e) => handleFileChange(field.name, e)}
+                      <ImagesPreview
+                        acceptMultipleFiles={false}
+                        featuredImage={true}
+                        userProfile={false}
+                        onOpen={onOpen}
+                        selectedImageInfo={selectedImages}
+                        onRemoveImageIds={onRemoveImageIds}
+                        deleteDisable={true}
+                        title={"Gallery image :"}
                       />
-                      <p className="mt-6">
-                        {/* File: {fieldValues[field.name] ? fieldValues[field.name].name : "No file selected"} */}
-                      </p>
                     </div>
 
                   </div>
@@ -179,6 +208,7 @@ const Page = () => {
               <BtnCreate onClick={handleUpdateRequirement} />
             </div>
           ))}
+          <ImageSelector Config={config} onClose={onClose} onSelectImageInfo={onSelectImages} />
         </div>
       </div>
     </div>
