@@ -23,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(common-layout)/(dashboard)/my-post/page.js", "components/PostTabPanel.js", "utils/fetch_data.js", "utils/api-config.js", "app/(common-layout)/(property)/property-grid/page.js", "components/FeaturedCardPropertyList.tsx", "components/home-1/PopupContact.tsx", "app/(common-layout)/(dashboard)/my-shop-business/page.js", "components/ShopTabPanel.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(common-layout)/(dashboard)/my-post/page.js", "components/PostTabPanel.js", "utils/fetch_data.js", "utils/api-config.js", "app/(common-layout)/(service)/service-grid/page.js", "components/FeaturedCardPropertyList.tsx", "components/home-1/PopupContact.tsx", "app/(common-layout)/(dashboard)/my-shop-business/page.js", "components/ShopTabPanel.js"],
   "exclude": ["node_modules"]
 }

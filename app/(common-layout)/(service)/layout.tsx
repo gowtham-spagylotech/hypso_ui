@@ -191,9 +191,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       <ul className="flex flex-wrap justify-center justify-content-lg-start justify-content-xl-center gap-4">
                         <li>
                           <Link
-                            href="property-grid"
+                            href="service-grid"
                             className={`link flex items-center gap-2 clr-neutral-500 hover:text-primary ${
-                              path === "/property-grid" && "text-primary"
+                              path === "/service-grid" && "text-primary"
                             }`}>
                             <Squares2X2Icon className="w-5 h-5" />
                             <span className="inline-block font-medium">
@@ -203,9 +203,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         </li>
                         <li>
                           <Link
-                            href="property-list"
+                            href="service-list"
                             className={`link flex items-center gap-2 clr-neutral-500 hover:text-primary ${
-                              path === "/property-list" && "text-primary"
+                              path === "/service-list" && "text-primary"
                             }`}>
                             <ListBulletIcon className="w-5 h-5" />
                             <span className="inline-block font-medium">
@@ -215,9 +215,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         </li>
                         <li>
                           <Link
-                            href="property-map"
+                            href="service-map"
                             className={`link flex items-center gap-2 clr-neutral-500 hover:text-primary ${
-                              path === "/property-map" && "text-primary"
+                              path === "/service-map" && "text-primary"
                             }`}>
                             <MapPinIcon className="w-5 h-5" />
                             <span className="inline-block font-medium">

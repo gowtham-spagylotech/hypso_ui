@@ -7,8 +7,8 @@ export const addShop = {
       "fields": [
         { "type": "select", "label": "Category", "name": "category", "placeholder": "Select an Option", "options": ["Real estate", "Used for sale", "Rental", "Jobs", "Event managements", "Service managements", "Products"] },
         { "type": "select", "label": "Subcategory", "name": "subcategory", "placeholder": "Select an Option", "options": ["Home", "Land", "Apartment", "Mobile", "Car", "Bike", "Camera"] },
-        { "type": "text", "label": "Shop/Business type", "name": "shoptype", "placeholder": "Your shop/business type" },
-        { "type": "text", "label": "Shop/Business name", "name": "shopname", "placeholder": "Your Shop name" },
+        { "type": "text", "label": "Shop/Business type", "name": "shop_type", "placeholder": "Your shop/business type" },
+        { "type": "text", "label": "Shop/Business name", "name": "name", "placeholder": "Your Shop name" },
         { "type": "text", "label": "Email id", "name": "email", "placeholder": "Your email id" },
         { "type": "text", "label": "Website URL", "name": "websiteurl", "placeholder": "Your shop website URL", },
         { "type": "text", "label": "Phone/Landline-1", "name": "phone_1", "placeholder": "Phone/Landline-1" },
@@ -19,9 +19,9 @@ export const addShop = {
         { "type": "textarea", "label": "Address line 1", "name": "addressline1", "placeholder": "Your shop address line 1" },
         { "type": "textarea", "label": "Address line 2", "name": "addressline2", "placeholder": "Your shop address line 2" },
         { "type": "select", "label": "Area", "name": "area", "placeholder": "Select an Option", "options": ["Saravanampatti", "Thudiyalur", "Peelamedu", "Gandhipuram", "Singanallur"] },
-        { "type": "select", "label": "City/Town", "name": "city", "placeholder": "Select an Option", "options": ["Coimbatore", "Trichy", "Chennai", "Madurai", "Tanjore", "Erode"] },
-        { "type": "select", "label": "State", "name": "state", "placeholder": "Select an Option", "options": ["Tamil nadu",] },
-        { "type": "select", "label": "Country", "name": "country", "placeholder": "Select an Option", "options": ["India",] },
+        { "type": "select", "label": "City/Town", "name": "city", "placeholder": "Select an Option"},
+        { "type": "select", "label": "State", "name": "state", "placeholder": "Select an Option" },
+        { "type": "select", "label": "Country", "name": "country", "placeholder": "Select an Option", },
         { "type": "text", "label": "Zip Code", "name": "zipcode", "placeholder": "Your zip code" },
         
         { "type": "map", "label": "Choose the location in map" },

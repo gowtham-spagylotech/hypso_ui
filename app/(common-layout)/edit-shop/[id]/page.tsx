@@ -14,9 +14,8 @@ import Date from "@/components/Date";
 import LabelPTag from "@/components/LabelPTag";
 import File from "@/components/File";
 import SocialIcon from "@/components/SocialIcon";
-import BtnCreate from "@/components/BtnCreate";
-import LeafletMap from "../../../components/LeafletMap";
-import { useRouter } from 'next/navigation'
+import BtnUpdate from "@/components/BtnUpdate";
+import LeafletMap from "@/components/LeafletMap";
 import {
   ChevronDownIcon,
   CloudArrowUpIcon,
@@ -35,13 +34,8 @@ const {
   fieldTypeSocialIcon,
 } = fieldTypes;
 
-const Page = () => {
-  const [fieldValues, setFieldValues] = useState({
-    // area: "Saravanampatti,Coimbatore",
-    // "city/town": "Coimbatore",
-    // state: "Tamil nadu",
-    // country: "India",
-  });
+const Page = ({ params, searchParams }: { params: { slug: string }, searchParams?: { [key: string]: string | string[] | undefined } }) => {
+
 
   const [shopInfo, setShopInfo] = useState({});
   const [sellerInfo, setSellerInfo] = useState({});
@@ -49,13 +43,71 @@ const Page = () => {
   const [socialMediaLinks, setSocialMediaLinks] = useState({});
   const [countryOptions, setCountryOptions] = useState([]);
   // console.log(countryOptions, "countryOptions")
+  // console.log("socialMediaLinks",socialMediaLinks)
   const [stateOptions, setStateOptions] = useState([])
   const [cityOptions, setCityOptions] = useState([])
   const [areaOptions, setAreaOptions] = useState([])
 
-  const router = useRouter()
 
+  const { id } = params;
+  const [fieldValues, setFieldValues] = useState({});
+  const [modifiedValues, setModifiedValues] = useState({});
+  const [config, setConfig] = useState();
+  const [close, setClose] = useState(true)
+  const [newParentCategory, setNewParentCategory] = useState(false)
+  const [categoryFeatureImage, setCategoryFeatureImage] = useState([]);
+  const [selectedImages, setSelectedImages] = useState();
+  const [selectedProducts, setSelectedProducts] = useState([]);
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+
+  useEffect(() => {
+    console.log("modifiedValues", modifiedValues)
+  }, [modifiedValues])
+
+  const onOpen = (config) => {
+    setConfig(config)
+  }
+
+  const onClose = () => {
+    setConfig(false)
+  }
+
+  const onSelectImages = (images) => {
+    setSelectedImages(images)
+  }
+
+  const onRemoveImageIds = () => {
+    setSelectedImages(null)
+  }
+
+  useEffect(() => {
+    // api call
+    fetch(`${apiUrl}/modules/shops/get-Shop/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // Add any other headers as needed
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("response", response)
+        setShopInfo(response?.record)
+        setSellerInfo(response?.record?.seller_info?.[0])
+        setAdditionalInfo(response?.record?.additional_info?.[0])
+        setSocialMediaLinks(response?.record?.social_media?.[0])
+      })
+      .catch((error) => {
+        console.error("Error in handleCreateShop:", error);
+        // Handle the error if needed
+        throw error; // Rethrow the error to handle it elsewhere if needed
+      });
+
+    // json
+
+  }, [])
+
   useEffect(() => {
     fetch(`${apiUrl}/modules/countries/get-countries`, {
       method: "POST",
@@ -92,8 +144,6 @@ const Page = () => {
         console.error("Error in fetching states:", error);
       });
   }, [countryOptions]);
-
-
 
   useEffect(() => {
     fetch(`${apiUrl}/modules/cities/cities-by-state`, {
@@ -135,8 +185,10 @@ const Page = () => {
       });
   }, [cityOptions]);
 
-
-
+  useEffect(()=>{
+    // renderFormField(shopInfo)
+    console.log("sellerInfo",sellerInfo)
+  },[shopInfo,sellerInfo,additionalInfo,socialMediaLinks])
   // Function to get all section_fields_title values
   function getAllSectionFieldsTitles() {
     const sectionFieldsTitles = [];
@@ -151,10 +203,13 @@ const Page = () => {
   }
 
   const allSectionFieldsTitles = getAllSectionFieldsTitles();
-  // console.log("allSectionFieldsTitles",allSectionFieldsTitles)
 
   const handleFieldChange = (name, value) => {
 
+    // setFieldValues((prevFieldValues) => ({ ...prevFieldValues, [name]: value }));
+    // setModifiedValues((prevFieldValues) => ({ ...prevFieldValues, [name]: value }));
+    console.log("name",name)
+    console.log("value",value)
     if (findSectionFieldsTitle(name) == allSectionFieldsTitles?.[0]) {
       setShopInfo((prevFieldValues) => ({
         ...prevFieldValues,
@@ -184,7 +239,7 @@ const Page = () => {
   function findSectionFieldsTitle(fieldName) {
     for (const section of addShop?.sections) {
       for (const field of section.fields) {
-        if (field.name == fieldName) {
+        if (field.name === fieldName) {
           return section.section_fields_title;
         }
       }
@@ -207,7 +262,7 @@ const Page = () => {
     }
   }
 
-  const renderFormFields = (fields, countryOptions) => {
+  const renderFormFields = (fields) => {
     const numberOfColumns = 2;
     const numberOfRows = Math.ceil(fields.length / numberOfColumns);
     const rows = Array.from({ length: numberOfRows }, (_, rowIndex) =>
@@ -226,10 +281,8 @@ const Page = () => {
   };
 
   const renderFormField = (field) => {
-    var field_values = findSectionFieldsValue(field?.name);
-
-    console.log('field_values', field_values);
-
+    var field_values = findSectionFieldsValue(field?.name)
+   
     switch (field.type) {
       case fieldTypeSelect:
 
@@ -343,10 +396,10 @@ const Page = () => {
             className={''}
             label={field.label}
             options={field.options}
-            onChange={(value) => handleFieldChange(field.name, value)}
+            value={field_values?.[field.name] || ""}
+            onChange={handleFieldChange}
           />
         );
-
 
       case fieldTypeSocialIcon:
         return (
@@ -356,7 +409,7 @@ const Page = () => {
             iconName={field.iconName}
             placeholder={field.placeholder}
             value={field_values?.[field.name] || ""}
-            onChange={(value) => handleFieldChange(field.name, value)}
+            onChange={handleFieldChange}
           />
         );
 
@@ -383,7 +436,6 @@ const Page = () => {
             />
             <Textarea
               className={classNames.textareaInput}
-              name={field.name}
               placeholder={field.placeholder}
               value={field_values?.[field.name] || ""}
               onChange={handleFieldChange}
@@ -394,9 +446,11 @@ const Page = () => {
       case fieldTypeDate:
         return (
           <div className={classNames.formFieldWrapper}>
-            <LabelPTag className={classNames.formFieldLabel} label={field.label} />
+            <LabelPTag
+              className={classNames.formFieldLabel}
+              label={field.label}
+            />
             <Date
-              name={field.name}
               className={classNames.dateInput}
               placeholder={field.placeholder}
               value={field_values?.[field.name] || ""}
@@ -405,22 +459,22 @@ const Page = () => {
           </div>
         );
 
-      case fieldTypeFile:
-      // return (
-      //   <div className={classNames.formFieldWrapper}>
-      //     <File
-      //       className={classNames.fileInputWrapper}
-      //       label={field.label}
-      //       onChange={(e) => handleFileChange(field.name, e)}
-      //     />
-      //     <p className="mt-6">
-      //       File:{" "}
-      //       {fieldValues[field.name]
-      //         ? fieldValues[field.name].name
-      //         : "No file selected"}
-      //     </p>
-      //   </div>
-      // );
+      // case fieldTypeFile:
+      //   return (
+      //     <div className={classNames.formFieldWrapper}>
+      //       <File
+      //         className={classNames.fileInputWrapper}
+      //         label={field.label}
+      //         onChange={(e) => handleFileChange(field.name, e)}
+      //       />
+      //       <p className="mt-6">
+      //         File:{" "}
+      //         {fieldValues[field.name]
+      //           ? fieldValues[field.name].name
+      //           : "No file selected"}
+      //       </p>
+      //     </div>
+      //   );
       case field.type == "map":
         return (
           <div >
@@ -444,32 +498,30 @@ const Page = () => {
     }
   };
 
-  const handleCreateShop = () => {
-    // router.push(`edit-shop/${response.post_id}`);
-
+  const handleUpdateShop = () => {
 
     var payload = {
       category_id: 1,
       sub_category_id: [1, 2, 3],
-      name: shopInfo?.name,
-      shop_type: shopInfo?.type,
-      email: shopInfo?.email,
-      description: shopInfo?.description,
+      name: modifiedValues?.name,
+      shop_type: modifiedValues?.type,
+      email: modifiedValues?.email,
+      description: modifiedValues?.description,
       featured_image: 1,
       catalogue: 2,
       images: [{ images: [1, 2, 3] }],
-      phone_1: shopInfo?.phone_1,
-      phone_2: shopInfo?.phone_2,
-      phone_3: shopInfo?.phone_3,
-      whatsapp_number: shopInfo?.whatsappnumber,
+      phone_1: modifiedValues?.phone_1,
+      phone_2: modifiedValues?.phone_2,
+      phone_3: modifiedValues?.phone_3,
+      whatsapp_number: modifiedValues?.whatsapp_number,
       address: {
-        line_1: shopInfo?.addressline1,
-        line_2: shopInfo?.addressline2,
-        area: shopInfo?.area,
-        city: shopInfo?.city,
-        state: shopInfo?.state,
-        zip: shopInfo?.zipcode,
-        country: shopInfo?.country,
+        line_1: modifiedValues?.addressline1,
+        line_2: modifiedValues?.addressline2,
+        area: modifiedValues?.area,
+        city: modifiedValues?.city,
+        state: modifiedValues?.state,
+        zip: modifiedValues?.zipcode,
+        country: modifiedValues?.country,
       },
       latitude: 11.0794473,
       longitude: 77.0060358,
@@ -484,7 +536,8 @@ const Page = () => {
     }
 
     console.log("payload", payload)
-    fetch(`${apiUrl}/modules/shops/create`, {
+    console.log("modifiedValues", modifiedValues)
+    fetch(`${apiUrl}/modules/shops/update`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -493,10 +546,9 @@ const Page = () => {
       body: JSON.stringify(payload),
     })
       .then((response) => response.json())
-      .then((response) => {
-        console.log("response", response);
-        router.push(`edit-shop/${response.shop_id}`)
-
+      .then((postDataResult) => {
+        console.log("Result of the POST request:", postDataResult);
+        // You can perform further actions with postDataResult if needed
       })
       .catch((error) => {
         console.error("Error in handleCreateShop:", error);
@@ -504,7 +556,8 @@ const Page = () => {
         throw error; // Rethrow the error to handle it elsewhere if needed
       });
   };
-  // console.log("countryOptions", countryOptions)
+
+  
   return (
     <div className="py-[30px] lg:py-[60px] bg-[var(--bg-2)] px-3">
       <div className="container">
@@ -525,13 +578,13 @@ const Page = () => {
               >
                 <div className="pt-4">
                   <div className="border-t pt-4">
-                    {index == 0 && <BtnCreate onClick={handleCreateShop} />}{" "}
+                    {index === 0 && <BtnUpdate onClick={handleUpdateShop} />}{" "}
                     {renderFormFields(section.fields)}
                   </div>
                 </div>
               </Accordion>
-              {index == addShop.sections.length - 1 && (
-                <BtnCreate onClick={handleCreateShop} />
+              {index === addShop.sections.length - 1 && (
+                <BtnUpdate onClick={handleUpdateShop} />
               )}{" "}
             </div>
           ))}
@@ -542,3 +595,4 @@ const Page = () => {
 };
 
 export default Page;
+

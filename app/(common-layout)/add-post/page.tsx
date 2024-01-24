@@ -33,7 +33,7 @@ const Page = () => {
   const [selectedImages, setSelectedImages] = useState();
   const [selectedProducts, setSelectedProducts] = useState([]);
   const router = useRouter();
-  
+
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const handleFieldChange = (name, value) => {
     setFieldValues((prevFieldValues) => ({
