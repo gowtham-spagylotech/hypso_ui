@@ -73,11 +73,13 @@ const Page = ({ params, searchParams }: { params: { slug: string }, searchParams
                 // "category_id": 1,
                 "name": modifiedValues?.name,
                 "description": modifiedValues?.description,
+                "created_date": modifiedValues?.created_date,
+                "expiry_date": modifiedValues?.expiry_date,
                 // "featured_image": 1,
                 // "images":[{"images": [1,2,3]}],
                 // "custom_field_data":[{"brand": "acer"}],
-                // "entity_type": "ENT_LISTING",
-                // "is_active": true
+                "entity_type": "ENT_LISTING",
+                "is_active": true
 
             })
         })

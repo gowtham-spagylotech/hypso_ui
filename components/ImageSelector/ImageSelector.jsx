@@ -117,7 +117,7 @@ const ImageSelector = ({ Config, onClose, onSelectImageInfo }) => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch(`${apiUrl}/modules/images/list`, {
+            const response = await fetch(`${apiUrl}/modules/images/get-images`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -128,6 +128,7 @@ const ImageSelector = ({ Config, onClose, onSelectImageInfo }) => {
 
             if (response.ok) {
                 const data = await response.json();
+                // console.log("data",data)
                 setImages(data?.records)
                     setProgress({ started: false, pc: 0 })
                     setMessage("")
@@ -197,6 +198,7 @@ const ImageSelector = ({ Config, onClose, onSelectImageInfo }) => {
             var formData = new FormData()
             formData.append('file', image)
             formData.append('area_id', 1)
+            formData.append('user_id', 3)
             setMessage("Uploading...");
             setProgress({ started: true, pc: progressPercentage })
             console.log("formData - " + JSON.stringify(formData))

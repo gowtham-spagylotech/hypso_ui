@@ -1,7 +1,8 @@
 "use client";
 import * as classNames from "@/public/data/classNames";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import moment from 'moment';
 import Accordion from "@/components/Accordion";
 import Select from "@/components/Select";
 import Text from "@/components/Text";
@@ -31,10 +32,29 @@ const Page = () => {
   const [newParentCategory, setNewParentCategory] = useState(false)
   const [categoryFeatureImage, setCategoryFeatureImage] = useState([]);
   const [selectedImages, setSelectedImages] = useState();
+  const [maxDate, setMaxDate] = useState();
   const [selectedProducts, setSelectedProducts] = useState([]);
   const router = useRouter();
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+  useEffect(() => {
+    if (fieldValues?.created_date) {
+
+      // const current = new Date();
+      // const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+      const currentDate = moment();
+
+      console.log("currentDate", currentDate.format())
+      const createdDate = moment(fieldValues?.created_date);
+      const newDate = createdDate.add(30, 'days');
+
+      const formattedNewDate = newDate.format('YYYY-MM-DD');
+      setMaxDate(formattedNewDate)
+      console.log(formattedNewDate);
+    }
+  }, [fieldValues])
+
   const handleFieldChange = (name, value) => {
     setFieldValues((prevFieldValues) => ({
       ...prevFieldValues,
@@ -43,27 +63,33 @@ const Page = () => {
   };
 
   const handleUpdateRequirement = () => {
+    var payload = {
+      "category_id": 1,
+      "name": fieldValues?.name,
+      "description": fieldValues?.description,
+      "created_date": fieldValues?.created_date,
+      "expiry_date": fieldValues?.expiry_date,
+      // "featured_image": 1,
+      // "images":[{"images": [1,2,3]}],
+      // "custom_field_data":[{"brand": "acer"}],
+      "entity_type": "ENT_LISTING",
+      "is_active": true
+    }
+
+    console.log("payload",payload)
+    
     fetch(`${apiUrl}/modules/posts/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         // Add any other headers as needed
       },
-      body: JSON.stringify({
-        "category_id": 1,
-        "name": fieldValues?.name,
-        "description": fieldValues?.description,
-        // "featured_image": 1,
-        // "images":[{"images": [1,2,3]}],
-        // "custom_field_data":[{"brand": "acer"}],
-        "entity_type": "ENT_LISTING",
-        "is_active": true
-
-      })
+      body: JSON.stringify(payload)
     })
       .then((response) => response.json())
       .then((response) => {
         console.log("response", response);
+        if(response.post_id)
         router.push(`edit-post/${response.post_id}`)
 
       })
@@ -72,17 +98,6 @@ const Page = () => {
         // Handle the error if needed
         throw error; // Rethrow the error to handle it elsewhere if needed
       });
-  };
-
-  const handleFileChange = (name, event) => {
-    const files = event.target.files;
-    if (files && files.length > 0) {
-      const file = files[0];
-      setFieldValues((prevFieldValues) => ({
-        ...prevFieldValues,
-        [name]: file,
-      }));
-    }
   };
 
   const onOpen = (config) => {
@@ -167,6 +182,8 @@ const Page = () => {
                               className={classNames.dateInput}
                               placeholder={field.placeholder}
                               name={field.name}
+                              min={field.name == "created_date" ? moment()?.format('YYYY-MM-DD') : fieldValues?.created_date}
+                              max={field.name == "expiry_date" ? maxDate : ""}
                               value={fieldValues[field.name] || ""}
                               onChange={handleFieldChange}
                             />

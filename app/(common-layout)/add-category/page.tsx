@@ -91,7 +91,7 @@ const Page = () => {
     var payload = {
       "name": createCategoryValues?.name,
       "description": createCategoryValues?.description,
-      "featured_image": 1,
+      "featured_image":selectedImages?.image_id,
       "parent_category_id": createCategoryValues?.parent_category_id,
       "entity_type": "ENT_LISTING",
       "is_active": true,
@@ -159,6 +159,7 @@ const Page = () => {
     setClose(false)
   }
 
+  
   return (
     <div className="py-8 lg:py-16 bg-[var(--bg-2)] px-3">
       <div className="container">

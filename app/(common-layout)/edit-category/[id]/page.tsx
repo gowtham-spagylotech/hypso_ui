@@ -20,12 +20,12 @@ const {
   fieldTypeFile,
 } = fieldTypes;
 
-const Page = ({params,searchParams}: { params: { slug: string },searchParams?: { [key: string]: string | string[] | undefined }}) => {
+const Page = ({ params, searchParams }: { params: { slug: string }, searchParams?: { [key: string]: string | string[] | undefined } }) => {
 
   const { id } = params;
   const [updateCategoryJSON, setUpdateCategoryJSON] = useState([])
   const [updateCategoryValues, setUpdateCategoryValues] = useState({});
-  const [modifiedCategoryValues,setModifiedCategoryValues] = useState({})
+  const [modifiedCategoryValues, setModifiedCategoryValues] = useState({})
   const [categoryList, setCategoryList] = useState([]);
   const [config, setConfig] = useState();
   const [close, setClose] = useState(true)
@@ -73,8 +73,8 @@ const Page = ({params,searchParams}: { params: { slug: string },searchParams?: {
     })
       .then((response) => response.json())
       .then((response) => {
-      //  console.log("response",response)
-       setUpdateCategoryValues(response?.record)
+        //  console.log("response",response)
+        setUpdateCategoryValues(response?.record)
       })
       .catch((error) => {
         console.error("Error in handleCreateShop:", error);
@@ -93,8 +93,8 @@ const Page = ({params,searchParams}: { params: { slug: string },searchParams?: {
     // console.log("newParentCategory", newParentCategory)
     // console.log("updateCategoryJSON",updateCategoryJSON)
     // console.log("categoryList", categoryList)
-    console.log("modifiedCategoryValues",modifiedCategoryValues)
-  }, [updateCategoryValues, categoryList, newParentCategory, updateCategoryJSON,modifiedCategoryValues]);
+    console.log("modifiedCategoryValues", modifiedCategoryValues)
+  }, [updateCategoryValues, categoryList, newParentCategory, updateCategoryJSON, modifiedCategoryValues]);
 
   // Function to handle form field changes
   const handleFormFieldChange = (fieldName, value) => {
@@ -104,8 +104,8 @@ const Page = ({params,searchParams}: { params: { slug: string },searchParams?: {
   };
 
   function getCategoryNameById(categoryId) {
-    setUpdateCategoryValues((prevValues) => ({ ...prevValues, "category_id": categoryId, }));
-    setModifiedCategoryValues((prevValues) => ({ ...prevValues, "category_id": categoryId, }));
+    setUpdateCategoryValues((prevValues) => ({ ...prevValues, "parent_category_id": categoryId, }));
+    setModifiedCategoryValues((prevValues) => ({ ...prevValues, "parent_category_id": categoryId, }));
     setClose(true)
     const category = categoryList?.find(category => category?.category_id == categoryId);
     return category ? category.name : null;
@@ -120,8 +120,8 @@ const Page = ({params,searchParams}: { params: { slug: string },searchParams?: {
         // Add any other headers as needed
       },
       body: JSON.stringify({
-        "category_id":id,
-        "name": modifiedCategoryValues?.child_category,
+        "category_id": id,
+        "name": modifiedCategoryValues?.name,
         "description": modifiedCategoryValues?.description,
         "featured_image": 1,
         "parent_category_id": modifiedCategoryValues?.parent_category_id,
@@ -140,7 +140,7 @@ const Page = ({params,searchParams}: { params: { slug: string },searchParams?: {
         throw error; // Rethrow the error to handle it elsewhere if needed
       });
   };
-  
+
 
 
   const onOpen = (config) => {
@@ -183,20 +183,21 @@ const Page = ({params,searchParams}: { params: { slug: string },searchParams?: {
   return (
     <div className="py-8 lg:py-16 bg-[var(--bg-2)] px-3">
       <div className="container">
+       
         <div className="w-full lg:w-[75%] xl:w-full mx-auto">
           {updateCategoryJSON?.map((section, index) => (
             <div key={index} className="bg-white p-4 sm:p-6 md:p-8 lg:p-10 mb-5 sm:mb-8 md:mb-12 rounded-2xl">
               <div className="flex w-full items-center justify-between">
                 <p className="text-xl font-bold">Edit Category</p>
                 <div>
-                  <BtnUpdate onClick={()=>updateCategory()}/>
+                  <BtnUpdate onClick={() => updateCategory()} />
                 </div>
               </div>
               <div className="pt-4 ">
                 <div className="border-t pt-4 pb-4">
                   <div className="flex mb-4 justify-between flex-wrap w-full">
                     {section?.fields?.map((field, index) => (
-                      <div key={index} className={`w-full lg:w-[49%] relative`}>
+                      <div key={index} className={`w-full ${newParentCategory && field.parent ? "lg:w-[100%]" : "lg:w-[49%]"} ${newParentCategory && field.child ? "hidden" : "block"} relative`}>
                         {field.type == fieldTypeText && (
                           <div className={`${classNames.formFieldWrapper} relative mb-5`}>
                             {field.parent ?
@@ -210,7 +211,7 @@ const Page = ({params,searchParams}: { params: { slug: string },searchParams?: {
                                 {field.parent && newParentCategory ? <Text className={classNames.textInput} placeholder={field.placeholder} name={field.name} onChange={handleFormFieldChange} /> : ""}
                                 <div className={`${newParentCategory ? "hidden" : "block"}`}>
                                   <div className="relative">
-                                    <input type="text" className="w-full border p-2 focus:outline-none rounded-md text-base cursor-pointer" placeholder="Select Category" value={categoryList?.find(category => category?.category_id == updateCategoryValues?.parent_category_id)?.name} onClick={() => undo ()}></input>
+                                    <input type="text" className="w-full border p-2 focus:outline-none rounded-md text-base cursor-pointer" placeholder="Select Category" value={categoryList?.find(category => category?.category_id == updateCategoryValues?.parent_category_id)?.name} onClick={() => undo()}></input>
                                     <svg width="25px" height="25px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="absolute bottom-[8px] right-[10px]">
                                       <g>
                                         <path fill="none" d="M0 0h24v24H0z" />
@@ -265,7 +266,7 @@ const Page = ({params,searchParams}: { params: { slug: string },searchParams?: {
 
                         {field.type == fieldTypeFile && (
                           <>
-                            
+
                             <ImagesPreview acceptMultipleFiles={false} featuredImage={true} userProfile={false} onOpen={onOpen} selectedImageInfo={selectedImages} onRemoveImageIds={onRemoveImageIds} deleteDisable={true} title={"Add Image :"} />
                           </>
 
@@ -275,7 +276,7 @@ const Page = ({params,searchParams}: { params: { slug: string },searchParams?: {
                   </div>
                 </div>
               </div>
-              <BtnUpdate onClick={()=>updateCategory()}/>
+              <BtnUpdate onClick={() => updateCategory()} />
             </div>
           ))}
 
